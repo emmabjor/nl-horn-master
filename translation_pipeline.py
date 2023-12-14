@@ -465,7 +465,7 @@ def main():
     df_save = update_df(df_save, horn_col_name, horn_formulas, horn_evals)
     
     
-    #save_values(df_save, filename)
+    save_values(df_save, filename)
 
 
 if __name__ == "__main__":
