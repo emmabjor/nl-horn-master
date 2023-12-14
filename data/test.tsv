@@ -1,0 +1,23 @@
+num	input_sequence	prompt_5-translations	prompt_5-evals	prompt_5_adjustment_prompt_3-translations	prompt_5_adjustment_prompt_3-evals	cnf_0-translations	cnf_0-evals	horn_0-translations	horn_0-evals
+300	it's unreasonable to be compassionate when someone shares that they've suffered a loss in their family.	∀x∀y∀z(SharesLoss(x, y, z) ∧ Compassionate(x, z) → ¬evaluation(REASONABLE))	1	∀x∀y∀z(People(x) ∧ People(y) ∧ Family(z) ∧ SufferedLoss(y,z) ∧ Shares(x,y) ∧ BeCompassionate(x) → evaluation(UNREASONABLE))	1	evaluation(UNREASONABLE) | ~People(v0) | ~People(v1) | ~Family(v2) | ~SufferedLoss(v1, v2) | ~Shares(v0, v1) | ~BeCompassionate(v0)	1	¬People(v0) ∨ ¬People(v1) ∨ ¬Family(v2) ∨ ¬SufferedLoss(v1, v2) ∨ ¬Shares(v0, v1) ∨ ¬BeCompassionate(v0) ∨ evaluation(UNREASONABLE)	1
+301	it's not expected that spouses spend time together reminder	∀x∀y (Spouses(x, y) ∧ SpendTimeTogether(x, y) → ¬evaluation(EXPECTED))	1	∀x∀y(Spouses(x, y) ∧ SpendTimeTogether(x, y) → evaluation(NOT_EXPECTED))	1	evaluation(NOT_EXPECTED) | ~Spouses(v3, v4) | ~SpendTimeTogether(v3, v4)	1	¬Spouses(v3, v4) ∨ ¬SpendTimeTogether(v3, v4) ∨ evaluation(NOT_EXPECTED)	1
+302	it is good not to spend money you do not have.	∀x(Money(x) ∧ ¬Has(x) ∧ NotSpend(x) → evaluation(GOOD))	1	∀x(Money(x) ∧ ∃y(People(y) ∧ ¬Have(y,x) ∧ NotSpend(y,x)) → evaluation(GOOD))	1	evaluation(GOOD) | ~Money(v5) | ~People(f0(v5)) | Have(f0(v5), v5) | ~NotSpend(f0(v5), v5)	1	NOT HORN	0
+303	it's bad to make your life easier.	∀x(MakeLifeEasier(x) → evaluation(BAD))	1	∀x(Person(x) ∧ MakeLifeEasier(x) → evaluation(BAD))	1	evaluation(BAD) | ~Person(v6) | ~MakeLifeEasier(v6)	1	¬Person(v6) ∨ ¬MakeLifeEasier(v6) ∨ evaluation(BAD)	1
+304	it's ok to have a debate with someone.	∀x∀y(DebateWithSomeone(x, y) → evaluation(OK))	1	∀x∀y(Person(x) ∧ Person(y) ∧ DebateWith(x, y) → evaluation(OK))	1	evaluation(OK) | ~Person(v7) | ~Person(v8) | ~DebateWith(v7, v8)	1	¬Person(v7) ∨ ¬Person(v8) ∨ ¬DebateWith(v7, v8) ∨ evaluation(OK)	1
+305	you shouldn't watch tv at work.	∀x(WatchesTVAtWork(x) → ¬evaluation(GOOD))	1	∀x(Person(x) ∧ WatchTVAtWork(x) → evaluation(BAD))	1	evaluation(BAD) | ~Person(v9) | ~WatchTVAtWork(v9)	1	¬Person(v9) ∨ ¬WatchTVAtWork(v9) ∨ evaluation(BAD)	1
+306	it's wrong to let your partner know your boundaries regarding contact with exes.	∀x∀y((Partner(x,y) ∧ BoundariesRegardingExes(x,y)) → ¬evaluation(GOOD))	1	∀x∀y(Partner(x,y) ∧ LetKnowBoundariesRegardingExes(x,y) → evaluation(WRONG))	1	evaluation(WRONG) | ~Partner(v10, v11) | ~LetKnowBoundariesRegardingExes(v10, v11)	1	¬Partner(v10, v11) ∨ ¬LetKnowBoundariesRegardingExes(v10, v11) ∨ evaluation(WRONG)	1
+307	it's considered rude to badmouth friends' significant others.	∀x∀y(Badmouths(x, y) ∧ FriendsSignificantOther(x, y) → ¬evaluation(GOOD))	1	∀x∀y∀z(Friends(x,z) ∧ SignificantOther(y,z) ∧ Badmouths(x,y) → ¬evaluation(GOOD))	1	~evaluation(GOOD) | ~Friends(v12, v14) | ~SignificantOther(v13, v14) | ~Badmouths(v12, v13)	1	¬evaluation(GOOD) ∨ ¬Friends(v12, v14) ∨ ¬SignificantOther(v13, v14) ∨ ¬Badmouths(v12, v13)	1
+308	it's expected that you stay with the person you plan on marrying.	∀x∀y(PlanToMarry(x, y) → StaysWith(x, y) → evaluation(EXPECTED))	1	∀x∀y(PlanToMarry(x,y) ∧ StayWith(x,y) → evaluation(EXPECTED))	1	evaluation(EXPECTED) | ~PlanToMarry(v15, v16) | ~StayWith(v15, v16)	1	¬PlanToMarry(v15, v16) ∨ ¬StayWith(v15, v16) ∨ evaluation(EXPECTED)	1
+309	it is polite to not listen to people's feelings.	∀x∀y(ListensTo(x, y) ∧ Feelings(y) → ¬evaluation(POLITE))	1	∀x∀y(People(x) ∧ Feelings(y, x) ∧ ¬ListensTo(y,x) → evaluation(POLITE))	1	evaluation(POLITE) | ~People(v17) | ~Feelings(v18, v17) | ListensTo(v18, v17)	1	NOT HORN	0
+310	it's taboo to admit that you don't like your step child.	∀x∀y(StepChild(x,y) ∧ AdmitDislike(x,y) → ¬evaluation(TABOO))	1	∀x∀y(StepChild(x,y) ∧ AdmitDislike(y,x) → evaluation(TABOO))	1	evaluation(TABOO) | ~StepChild(v19, v20) | ~AdmitDislike(v20, v19)	1	¬StepChild(v19, v20) ∨ ¬AdmitDislike(v20, v19) ∨ evaluation(TABOO)	1
+400	it is fine to drink sugary soda.	0
+401	you should expect to avoid spoilers for a show that is old.	0
+402	you should intentionally harm someone's things.	0
+403	it's not fair to have one pet roam the house while the others are locked up.	0
+404	it's not your right to complain about a teacher who is not performing up to standard.	0
+405	you should talk to people about your fetishes.	0
+406	it is rude to point out physical differences in people.	0
+407	you shouldn't expect everyone to celebrate their birthday.	0
+408	you should always support your friends at their wedding.	0
+409	it's not ok to join in on fun activities.	0
+410	it's not ok to report someone who is shoplifting.	0
