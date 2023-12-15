@@ -371,34 +371,39 @@ def cnf_to_horn(df, cnf_col_name):
 
     for index in range(len(cnf_formulas)):
         if cnf_evals[index] == 1:
-            try:
-                antecedent = []
-                consequence = []
-                formula = cnf_formulas[index]
-                formula_splt = formula.split('|')
-                for predicate in formula_splt:
-                    if predicate.strip()[0] != '~':
-                        consequence.append(predicate.strip())
-                    else:
-                        i = predicate.replace('~', '¬')
-                        antecedent.append(i.strip())
+            if "&" in cnf_formulas[index]:
+                horn_formulas.append('INVALID')
+                horn_evals.append(0)
+                print(f'Not CNF\n')
+            else:
+                try:
+                    antecedent = []
+                    consequence = []
+                    formula = cnf_formulas[index]
+                    formula_splt = formula.split('|')
+                    for predicate in formula_splt:
+                        if predicate.strip()[0] != '~':
+                            consequence.append(predicate.strip())
+                        else:
+                            i = predicate.replace('~', '¬')
+                            antecedent.append(i.strip())
 
-                if len(consequence) > 1:
-                    horn_formulas.append('NOT HORN')
-                    horn_evals.append(0)
-                    print(f'CNF: {cnf_formulas[index]}\nHorn: Not Horn\n')
-                else:
-                    joined = (' ∨ ').join(antecedent)
-                    if len(consequence) > 0:
-                        joined = (' ∨ ').join([joined, consequence[0]])
-                    #print(joined)
-                    horn_formulas.append(joined)
-                    horn_evals.append(1)
-                    print(f'CNF: {cnf_formulas[index]}\nHorn: {joined}\n')
-            except Exception as e:
-                horn_formulas.append('ERROR')
-                horn_evals.append(-1)
-                print(f'CNF: {cnf_formulas[index]}\nHorn: {e}\n')
+                    if len(consequence) > 1:
+                        horn_formulas.append('NOT HORN')
+                        horn_evals.append(0)
+                        print(f'CNF: {cnf_formulas[index]}\nHorn: Not Horn\n')
+                    else:
+                        joined = (' ∨ ').join(antecedent)
+                        if len(consequence) > 0:
+                            joined = (' ∨ ').join([joined, consequence[0]])
+                        #print(joined)
+                        horn_formulas.append(joined)
+                        horn_evals.append(1)
+                        print(f'CNF: {cnf_formulas[index]}\nHorn: {joined}\n')
+                except Exception as e:
+                    horn_formulas.append('ERROR')
+                    horn_evals.append(-1)
+                    print(f'CNF: {cnf_formulas[index]}\nHorn: {e}\n')
         else:
             horn_formulas.append('INVALID')
             horn_evals.append(0)
