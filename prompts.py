@@ -165,3 +165,50 @@ def adjustment_prompt_3(sentence, formula):
         {"role": "user", "content": "NL English sentence: ```you should ask too much of your family.```. Formula: ```∀x(People(x) ∧ Family(x) → ShouldAskTooMuch(x))``` ."},
         {"role": "assistant", "content": "∀x∀y(Family(x,y) ∧ AskTooMuch(y,x) → evaluation(GOOD))"},
         {"role": "user", "content": f"NL English sentence: ```{sentence}```. Formula: ```{formula}``` ."}]
+    
+
+
+# Ensuring positive evaluations, not equality and precise constants.
+def prompt_6(sentence):
+    return [
+        {"role":"system", "content": "You are a system tasked with translating sentences in natural language English to first-order logic formulas.\
+            You should ensure precise and valid first-order formulas that convey the sentiment of the original sentence as accurately as possible.\
+            You should use the following symbols: '∨', '∧', '→', '↔', '∀', '∃', '¬', '(', ')', ','.\
+            You should use variables in lowercase (e.g. 'x'), constants in uppercase (e.g. 'BAD') and predicates (e.g. 'People(x)').\
+            You should ensure that the scope of a predicate does not contain other predicates or nested structures.\
+            You should not negate variables or constants, e.g. (evaluation(¬GOOD)).\
+            Each formula should be formulated as an implication, where the conclusion should always be an evaluation, for example 'evaluation(GOOD)'\
+            The 'evaluation' predicate should not be negated, neither should the constant within the 'evaluation' predicate. Rather, the negation sentiment should be part of the constant, for example 'evaluation(NOT_GOOD)'\
+            When 'you should' is stated, it implies a universally good evaluation ('evaluation(GOOD)').\
+            When 'it's nice' is stated, it implies a consequence interpreted as 'evaluation(NICE)'.\
+            'evaluation(NOT_GOOD)' is not the same as 'evaluation(BAD)'.\
+            You get two examples that show correct translations and the wanted output format."},
+        {"role": "user", "content": "```it's good to care about your family's history.```"},
+        {"role": "assistant", "content": "∀x∀y(FamilyHistory(x,y) ∧ Cares(x,y) → evaluation(GOOD))"},
+        {"role": "user", "content": "```getting circumcised isn't normal.```"},
+        {"role": "assistant", "content": "∀x(GettingCircumcised(x) → evaluation(NOT_NORMAL))"},
+        {"role": "user", "content": f"```{sentence}```"}
+        
+    ] 
+    
+
+# Ensuring positive evaluations, not equality and precise constants.
+def adjustment_prompt_4(sentence, formula):
+    return [
+        {"role":"system", "content": "You are a system tasked with adjusting a first-order formula to make sure it captures the sentiment expressed in the natural language sentence as accurately and complete as logically possible.\
+            You should ensure precise and valid first-order formulas that convey the sentiment of the original sentence as accurately as possible.\
+            You should use the following symbols: '∨', '∧', '→', '↔', '∀', '∃', '¬', '(', ')', ','.\
+            You should use variables in lowercase (e.g. 'x'), constants in uppercase (e.g. 'BAD') and predicates (e.g. 'People(x)').\
+            You should ensure that the scope of a predicate does not contain other predicates or nested structures.\
+            You should not negate variables or constants, e.g. (evaluation(¬GOOD)).\
+            Each formula should be formulated as an implication, where the conclusion should always be an evaluation, for example 'evaluation(GOOD)'\
+            The 'evaluation' predicate should not be negated, neither should the constant within the 'evaluation' predicate. Rather, the negation sentiment should be part of the constant, for example 'evaluation(NOT_GOOD)'\
+            When 'you should' is stated, it implies a universally good evaluation ('evaluation(GOOD)').\
+            When 'it's nice' is stated, it implies a consequence interpreted as 'evaluation(NICE)'.\
+            'evaluation(NOT_GOOD)' is not the same as 'evaluation(BAD)'.\
+            You get two examples that show correct translations and the wanted output format."},
+        {"role": "user", "content": "NL English sentence: ```it is unexpected people will feel proud of their country.```. Formula: ```∀x(People(x) ∧ Country(x) → ¬ExpectedProudOf(x))``` ."},
+        {"role": "assistant", "content": "∀x∀y(Country(x) ∧ People(y) ∧ BelongsTo(y,x) ∧ FeelProud(y,x) → evaluation(UNEXPECTED))"},
+        {"role": "user", "content": "NL English sentence: ```you should ask too much of your family.```. Formula: ```∀x(People(x) ∧ Family(x) → ShouldAskTooMuch(x))``` ."},
+        {"role": "assistant", "content": "∀x∀y(Family(x,y) ∧ AskTooMuch(y,x) → evaluation(GOOD))"},
+        {"role": "user", "content": f"NL English sentence: ```{sentence}```. Formula: ```{formula}``` ."}]
