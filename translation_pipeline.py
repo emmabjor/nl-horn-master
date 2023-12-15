@@ -359,7 +359,6 @@ def cnf_to_horn(df, cnf_col_name):
 
     Args:
         df (DataFrame): The dataframe to iterate through
-        horn_col_name (str): Name of the column to save the translations and evaluations to
         cnf_col_name (str): Name of the column to iterate through
     """
     
@@ -442,35 +441,40 @@ def main():
     horn_col_name = "horn" # ------------- CHANGE COL_NAME HERE -------------
     
     #### Batch Handling ####
-    df_format = pd.read_csv(filename, sep='\t', header=0, nrows=0)
-    df_save = pd.concat([df_format, df_save])
+    # df_format = pd.read_csv(filename, sep='\t', header=0, nrows=0)
+    # df_save = pd.concat([df_format, df_save])
     
-    #### NL TO FOL ####
-    fol_formulas, fol_evals, fol_df = nl_to_fol(df_save) # ADD (OPTIONAL) FILEPATH HERE
-    print("FOL translations finished. Saving values...")
-    df_save = update_df(df_save, prompt_iteration, fol_formulas, fol_evals)
-    #save_values(fol_df, prompt_iteration, fol_formulas, fol_evals, filename)
+    # Testing
+    s = "(evaluation(EXPECTED) ∨ ¬StaysWith(C0, C1)) ∧ Person(C0) ∧ Person(C1) ∧ PlansOnMarrying(C0, C1)"
+    lst = [[s, 1]]
+    df_save = pd.DataFrame(lst, columns=["prompt_5_adjustment_prompt_3-translations","prompt_5_adjustment_prompt_3-evals"])
     
-    fol_adjustment_formulas, fol_adjustment_evals, fol_adjustment_df = nl_to_fol_adjustment(df_save, prompt_iteration)
-    print("FOL adjustments finished. Saving values...")
-    df_save = update_df(df_save, f'{prompt_iteration}_{adjustment_iteration}', fol_adjustment_formulas, fol_adjustment_evals)
-    #save_values(fol_adjustment_df, f'{prompt_iteration}_{adjustment_iteration}', fol_adjustment_formulas, fol_adjustment_evals, filename)    
+    # #### NL TO FOL ####
+    # fol_formulas, fol_evals, fol_df = nl_to_fol(df_save) # ADD (OPTIONAL) FILEPATH HERE
+    # print("FOL translations finished. Saving values...")
+    # df_save = update_df(df_save, prompt_iteration, fol_formulas, fol_evals)
+    # #save_values(fol_df, prompt_iteration, fol_formulas, fol_evals, filename)
+    
+    # fol_adjustment_formulas, fol_adjustment_evals, fol_adjustment_df = nl_to_fol_adjustment(df_save, prompt_iteration)
+    # print("FOL adjustments finished. Saving values...")
+    # df_save = update_df(df_save, f'{prompt_iteration}_{adjustment_iteration}', fol_adjustment_formulas, fol_adjustment_evals)
+    # #save_values(fol_adjustment_df, f'{prompt_iteration}_{adjustment_iteration}', fol_adjustment_formulas, fol_adjustment_evals, filename)    
         
         
     #### FOL TO CNF ####
     cnf_df, cnf_formulas, cnf_evals = fol_to_cnf(df_save, prompt_iteration, adjustment_iteration)
     print("CNF convertion finished. Saving values...")
-    df_save = update_df(df_save, cnf_col_name, cnf_formulas, cnf_evals)
-    #save_values(cnf_df, cnf_col_name, cnf_formulas, cnf_evals, filename)
+    # df_save = update_df(df_save, cnf_col_name, cnf_formulas, cnf_evals)
+    # #save_values(cnf_df, cnf_col_name, cnf_formulas, cnf_evals, filename)
     
     
-    #### CNF TO Horn ####
-    horn_df, horn_formulas, horn_evals = cnf_to_horn(df_save, cnf_col_name)
-    print("Horn conversion finished. Saving values...")
-    df_save = update_df(df_save, horn_col_name, horn_formulas, horn_evals)
+    # #### CNF TO Horn ####
+    # horn_df, horn_formulas, horn_evals = cnf_to_horn(df_save, cnf_col_name)
+    # print("Horn conversion finished. Saving values...")
+    # df_save = update_df(df_save, horn_col_name, horn_formulas, horn_evals)
     
     
-    save_values(df_save, filename)
+    #save_values(df_save, filename)
 
 
 if __name__ == "__main__":
