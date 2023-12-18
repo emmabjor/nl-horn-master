@@ -354,14 +354,76 @@ def fol_to_cnf(df, prompt_iteration, adjustment_iteration):
     
 ############################# CNF to Horn #############################
 
+
+def split_formula(f):
+    """
+    Splits a CNF formula into its antecedent and consequence parts.
+
+    Args:
+        f (str): The CNF formula to split.
+
+    Returns:
+        tuple: A tuple containing the antecedent and consequence parts of the formula.
+    """
+    antecedent = []
+    consequence = []
+    f = f.strip()
+    f = f[1:-1]
+    formula_splt = f.split('|')
+    for predicate in formula_splt:
+        if '~' not in predicate:
+            consequence.append(predicate.strip())
+        else:
+            i = predicate.replace('~', '¬')
+            antecedent.append(i.strip())
+    return antecedent, consequence
+
+
+def join_formula(antecedent, consequence):
+    """
+    Joins the antecedent and consequence parts of a Horn formula.
+
+    Args:
+        antecedent (list): The antecedent part of the Horn formula.
+        consequence (list): The consequence part of the Horn formula.
+
+    Returns:
+        str: The joined Horn formula.
+    """
+    joined = (' ∨ ').join(antecedent)
+    if len(consequence) > 0:
+        joined = (' ∨ ').join([joined, consequence[0]])
+    return '('+joined+')'
+
+
+def add_parenthesis(f):
+    splitted_f = f.split('&')
+    joined_f = ""
+    for i in splitted_f:
+        joined_f += ("("+i.strip()+") & ")
+    return joined_f[:-3]
+
+
+def create_horn(f):
+    if "|" not in f:
+        return f
+    antecedent, consequence = split_formula(f)
+    if len(consequence) > 1: # Formula has more than one positive literal and is not Horn
+        return None
+    else: # Formula is Horn 
+        joined = join_formula(antecedent, consequence)
+        return joined
+    
+
 def cnf_to_horn(df, cnf_col_name):
     """Converts a data frame of CNF formulas to Horn formulas.
 
     Args:
         df (DataFrame): The dataframe to iterate through
+        horn_col_name (str): Name of the column to save the translations and evaluations to
         cnf_col_name (str): Name of the column to iterate through
     """
-    
+
     cnf_formulas = list(df[f'{cnf_col_name}-translations'])
     cnf_evals = list(df[f'{cnf_col_name}-evals'])
 
@@ -369,41 +431,37 @@ def cnf_to_horn(df, cnf_col_name):
     horn_evals = []
 
     for index in range(len(cnf_formulas)):
-        if cnf_evals[index] == 1:
-            if "&" in cnf_formulas[index]:
-                horn_formulas.append('INVALID')
-                horn_evals.append(0)
-                print(f'Not CNF\n')
-            else:
-                try:
-                    antecedent = []
-                    consequence = []
-                    formula = cnf_formulas[index]
-                    formula_splt = formula.split('|')
-                    for predicate in formula_splt:
-                        if predicate.strip()[0] != '~':
-                            consequence.append(predicate.strip())
-                        else:
-                            i = predicate.replace('~', '¬')
-                            antecedent.append(i.strip())
-
-                    if len(consequence) > 1:
+        if cnf_evals[index] == 1: # Formula is valid FOL
+            
+            try:
+                formula = add_parenthesis(cnf_formulas[index])
+                horn_sentence = ""
+                is_horn = True
+                for i in formula.split('&'):
+                    sub_horn = create_horn(i)
+                    
+                    if sub_horn is None: # One of the conjunctions is not Horn
                         horn_formulas.append('NOT HORN')
                         horn_evals.append(0)
                         print(f'CNF: {cnf_formulas[index]}\nHorn: Not Horn\n')
-                    else:
-                        joined = (' ∨ ').join(antecedent)
-                        if len(consequence) > 0:
-                            joined = (' ∨ ').join([joined, consequence[0]])
-                        #print(joined)
-                        horn_formulas.append(joined)
-                        horn_evals.append(1)
-                        print(f'CNF: {cnf_formulas[index]}\nHorn: {joined}\n')
-                except Exception as e:
-                    horn_formulas.append('ERROR')
-                    horn_evals.append(-1)
-                    print(f'CNF: {cnf_formulas[index]}\nHorn: {e}\n')
-        else:
+                        is_horn = False
+                        break
+                    
+                    else: # The conjunction is Horn
+                        horn_sentence += sub_horn.strip() + " ∧ "
+                        
+                if is_horn: # All conjunctions are Horn
+                    horn_formulas.append(horn_sentence[:-3])
+                    horn_evals.append(1)
+                    print(f'CNF: {cnf_formulas[index]}\nHorn: {horn_sentence[:-3]}\n')
+                    
+            except Exception as e: # Error in parsing
+                horn_formulas.append('ERROR')
+                horn_evals.append(-1)
+                print(f'CNF: {cnf_formulas[index]}\nHorn: {e}\n')
+                
+                    
+        else: # Formula is not valid FOL and therefore not valid Horn
             horn_formulas.append('INVALID')
             horn_evals.append(0)
             print(f'INVALID\n')
@@ -445,8 +503,10 @@ def main():
     # df_save = pd.concat([df_format, df_save])
     
     # Testing
-    s = "(evaluation(EXPECTED) ∨ ¬StaysWith(C0, C1)) ∧ Person(C0) ∧ Person(C1) ∧ PlansOnMarrying(C0, C1)"
-    lst = [[s, 1]]
+    #s = "∀x∀y(Person(x) ∧ Person(y) ∧ PlansOnMarrying(x, y) → StaysWith(x, y)) → evaluation(EXPECTED)"
+    lst = [["¬A(x) ∨ B(x) ∧ C(x) ∧ ¬D(x) ∨ ¬E(x)", 1],
+           ["¬A(x) ∨ ¬B(x)", 1],
+           ["INVALID", 0]]
     df_save = pd.DataFrame(lst, columns=["prompt_5_adjustment_prompt_3-translations","prompt_5_adjustment_prompt_3-evals"])
     
     # #### NL TO FOL ####
@@ -464,13 +524,14 @@ def main():
     #### FOL TO CNF ####
     cnf_df, cnf_formulas, cnf_evals = fol_to_cnf(df_save, prompt_iteration, adjustment_iteration)
     print("CNF convertion finished. Saving values...")
-    # df_save = update_df(df_save, cnf_col_name, cnf_formulas, cnf_evals)
+    df_save = update_df(df_save, cnf_col_name, cnf_formulas, cnf_evals)
     # #save_values(cnf_df, cnf_col_name, cnf_formulas, cnf_evals, filename)
     
     
     # #### CNF TO Horn ####
-    # horn_df, horn_formulas, horn_evals = cnf_to_horn(df_save, cnf_col_name)
-    # print("Horn conversion finished. Saving values...")
+    horn_df, horn_formulas, horn_evals = cnf_to_horn(df_save, cnf_col_name)
+    print("Horn conversion finished. Saving values...")
+    print(horn_formulas)
     # df_save = update_df(df_save, horn_col_name, horn_formulas, horn_evals)
     
     
