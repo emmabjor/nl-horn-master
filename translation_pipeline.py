@@ -504,7 +504,7 @@ def main():
     
     # Testing
     #s = "∀x∀y(Person(x) ∧ Person(y) ∧ PlansOnMarrying(x, y) → StaysWith(x, y)) → evaluation(EXPECTED)"
-    lst = [["¬A(x) ∨ B(x) ∧ C(x) ∧ ¬D(x) ∨ ¬E(x)", 1],
+    lst = [["(¬A(x) ∨ B(x)) ∧ C(x) ∧ (¬D(x) ∨ ¬E(x))", 1],
            ["¬A(x) ∨ ¬B(x)", 1],
            ["INVALID", 0]]
     df_save = pd.DataFrame(lst, columns=["prompt_5_adjustment_prompt_3-translations","prompt_5_adjustment_prompt_3-evals"])
