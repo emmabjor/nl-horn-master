@@ -168,7 +168,8 @@ def adjustment_prompt_3(sentence, formula):
     
 
 
-# Ensuring positive evaluations, not equality and precise constants.
+# Ensuring positive evaluations, not equality and precise constants (457 tokens).
+# CURRENTLY BEST
 def prompt_6(sentence):
     return [
         {"role":"system", "content": "You are a system tasked with translating sentences in natural language English to first-order logic formulas.\
@@ -182,21 +183,24 @@ def prompt_6(sentence):
             When 'you should' is stated, it implies a universally good evaluation ('evaluation(GOOD)').\
             When 'it's nice' is stated, it implies a consequence interpreted as 'evaluation(NICE)'.\
             'evaluation(NOT_GOOD)' is not the same as 'evaluation(BAD)'.\
-            You get two examples that show correct translations and the wanted output format."},
+            You get three examples that show correct translations and the wanted output format."},
         {"role": "user", "content": "```it's good to care about your family's history.```"},
         {"role": "assistant", "content": "∀x∀y(FamilyHistory(x,y) ∧ Cares(x,y) → evaluation(GOOD))"},
         {"role": "user", "content": "```getting circumcised isn't normal.```"},
         {"role": "assistant", "content": "∀x(GettingCircumcised(x) → evaluation(NOT_NORMAL))"},
-        {"role": "user", "content": f"```{sentence}```"}
-        
+        {"role": "user", "content": "```it's not ok to be frustrated when you work on amazon mechanical turk.```"},
+        {"role": "assistant", "content": "∀x(WorksOn(x, AMAZONMECHANICALTURK) ∧ Frustrated(x) → evaluation(NOT_OK))"},
+        {"role": "user", "content": f"```{sentence}```"}  
     ] 
     
 
 # Ensuring positive evaluations, not equality and precise constants.
+# CURRENTLY BEST
 def adjustment_prompt_4(sentence, formula):
     return [
         {"role":"system", "content": "You are a system tasked with adjusting a first-order formula to make sure it captures the sentiment expressed in the natural language sentence as accurately and complete as logically possible.\
             You should ensure precise and valid first-order formulas that convey the sentiment of the original sentence as accurately as possible.\
+            If the first-order formula does not need correction, your answer should be the formula as is.\
             You should use the following symbols: '∨', '∧', '→', '↔', '∀', '∃', '¬', '(', ')', ','.\
             You should use variables in lowercase (e.g. 'x'), constants in uppercase (e.g. 'BAD') and predicates (e.g. 'People(x)').\
             You should ensure that the scope of a predicate does not contain other predicates or nested structures.\
@@ -206,9 +210,56 @@ def adjustment_prompt_4(sentence, formula):
             When 'you should' is stated, it implies a universally good evaluation ('evaluation(GOOD)').\
             When 'it's nice' is stated, it implies a consequence interpreted as 'evaluation(NICE)'.\
             'evaluation(NOT_GOOD)' is not the same as 'evaluation(BAD)'.\
-            You get two examples that show correct translations and the wanted output format."},
-        {"role": "user", "content": "NL English sentence: ```it is unexpected people will feel proud of their country.```. Formula: ```∀x(People(x) ∧ Country(x) → ¬ExpectedProudOf(x))``` ."},
-        {"role": "assistant", "content": "∀x∀y(Country(x) ∧ People(y) ∧ BelongsTo(y,x) ∧ FeelProud(y,x) → evaluation(UNEXPECTED))"},
+            You get three examples that show correct adjustment and the wanted output format."},
+        {"role": "user", "content": "NL English sentence: ```people are not expected to love their family.```. Formula: ```∀x∀y((People(x) ∧ Family(y) ∧ BelongsTo(x,y)) → ¬ExpectedToLove(x,y)) → evaluation(NOT_GOOD)``` ."},
+        {"role": "assistant", "content": "∀x∀y(People(x) ∧ Family(x,y) ∧ Love(x,y) → evaluation(NOT_EXPECTED))"},
         {"role": "user", "content": "NL English sentence: ```you should ask too much of your family.```. Formula: ```∀x(People(x) ∧ Family(x) → ShouldAskTooMuch(x))``` ."},
         {"role": "assistant", "content": "∀x∀y(Family(x,y) ∧ AskTooMuch(y,x) → evaluation(GOOD))"},
+        {"role": "user", "content": "NL English sentence: ```it's taboo to admit that you don't like your step child.```. Formula: ```∀x∀y(StepChild(x,y) ∧ Admit(x,¬Likes(x,y)) → evaluation(TABOO))``` ."},
+        {"role": "assistant", "content": "∀x∀y(¬LikingStepChild(x) ∧ Admits(y,x) → evaluation(TABOO))"},
+        {"role": "user", "content": f"NL English sentence: ```{sentence}```. Formula: ```{formula}``` ."}]
+    
+    
+# Prompt using less instructions and more examples (505 tokens)
+def prompt_7(sentence):
+    return [
+        {"role":"system", "content": "You are a system tasked with translating sentences in natural language English to first-order logic formulas.\
+            You should ensure precise and valid first-order formulas that convey the sentiment of the original sentence as accurately as possible.\
+            You should use the following symbols: '∨', '∧', '→', '↔', '∀', '∃', '¬', '(', ')', ','.\
+            You should ensure that the scope of a predicate does not contain other predicates or nested structures.\
+            Each formula should be formulated as an implication, where the conclusion should always be an evaluation, for example 'evaluation(GOOD)'\
+            You get five examples that show correct translations and the wanted output format."},
+        {"role": "user", "content": "```it's good to care about your family's history.```"},
+        {"role": "assistant", "content": "∀x∀y(FamilyHistory(x,y) ∧ Cares(x,y) → evaluation(GOOD))"},
+        {"role": "user", "content": "```getting circumcised isn't normal.```"},
+        {"role": "assistant", "content": "∀x(GettingCircumcised(x) → evaluation(NOT_NORMAL))"},
+        {"role": "user", "content": "```you shouldn't get help if your anxiety is interfering with your daily life```"},
+        {"role": "assistant", "content": "∀x∀y(Anxiety(x) ∧ InterfereWithDailyLife(x,y) ∧ ¬Help(y) → evaluation(GOOD))"},
+        {"role": "user", "content": "```it's not ok to be frustrated when you work on amazon mechanical turk.```"},
+        {"role": "assistant", "content": "∀x(WorksOn(x, AMAZONMECHANICALTURK) ∧ Frustrated(x) → evaluation(NOT_OK))"},
+        {"role": "user", "content": "```you should not always get registration information when in an accident```"},
+        {"role": "assistant", "content": "∀y∃x(Accident(x) ∧ In(y,x) ∧ ¬GetRegistrationInfo(y) → evaluation(GOOD))"},
+        {"role": "user", "content": f"```{sentence}```"}  
+    ] 
+    
+# Adjustment prompt using less instructions and more examples.
+def adjustment_prompt_5(sentence, formula):
+    return [
+        {"role":"system", "content": "You are a system tasked with adjusting a first-order formula to make sure it captures the sentiment expressed in the natural language sentence as accurately and complete as logically possible.\
+            You should ensure precise and valid first-order formulas that convey the sentiment of the original sentence as accurately as possible.\
+            If the first-order formula does not need correction, your answer should be the formula as is.\
+            You should use the following symbols: '∨', '∧', '→', '↔', '∀', '∃', '¬', '(', ')', ','.\
+            You should ensure that the scope of a predicate does not contain other predicates or nested structures.\
+            Each formula should be formulated as an implication, where the conclusion should always be an evaluation, for example 'evaluation(GOOD)'\
+            You get five examples that show correct adjustment and the wanted output format."},
+        {"role": "user", "content": "NL English sentence: ```it is unexpected people will feel proud of their country.```. Formula: ```∀x(People(x) ∧ Country(x) → ¬ExpectedProudOf(x))``` ."},
+        {"role": "assistant", "content": "∀x∀y(Country(x) ∧ People(y) ∧ BelongsTo(y,x) ∧ FeelProud(y,x) → evaluation(UNEXPECTED))"},
+        {"role": "user", "content": "NL English sentence: ```it's good to be excited about getting your first paycheck.```. Formula: ```∀x(People(x) ∧ Excited(x, FirstPaycheck(x)) → evaluation(GOOD))``` ."},
+        {"role": "assistant", "content": "∀x∀y((Paycheck(x) ∧ Gets(y,x) → ExcitedAbout(y,x)) → evaluation(GOOD))"},
+        {"role": "user", "content": "NL English sentence: ```you shouldn't get help if your anxiety is interfering with your daily life```. Formula: ```∀x(People(x) ∧ Family(x) → ShouldAskTooMuch(x))``` ."},
+        {"role": "assistant", "content": "∀x∀y(Anxiety(x) ∧ InterfereWithDailyLife(x,y) ∧ ¬Help(y) → evaluation(GOOD))"},
+        {"role": "user", "content": "NL English sentence: ```getting circumcised isn't normal.```. Formula: ```∀x(GettingCircumcised(x) → evaluation(NOT_NORMAL))``` ."},
+        {"role": "assistant", "content": "∀x(GettingCircumcised(x) → evaluation(NOT_NORMAL))"},
+        {"role": "user", "content": "NL English sentence: ```it's taboo to admit that you don't like your step child.```. Formula: ```∀x∀y(StepChild(x,y) ∧ Admit(x,¬Likes(x,y)) → evaluation(TABOO))``` ."},
+        {"role": "assistant", "content": "∀x∀y(¬LikingStepChild(x) ∧ Admits(y,x) → evaluation(TABOO))"},
         {"role": "user", "content": f"NL English sentence: ```{sentence}```. Formula: ```{formula}``` ."}]
