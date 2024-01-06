@@ -110,7 +110,7 @@ def save_metadata(df, prompt_iteration):
 ############################# NL to FOL #############################
 
         
-def nl_to_fol(df):
+def nl_to_fol(df, prompt_function):
     """Iterates through a dataframe and calls for gpt to translate each sentence.
     Evaluates each translation as valid (1) or invalid (0), in addition to errors (-1).
     Saves the translations and evaluation to the file containing all translations.
@@ -124,7 +124,7 @@ def nl_to_fol(df):
     formulas = []
     evals = []
     for i in df['input_sequence']:
-        prompt = prompts.prompt_5(i) # ------------- CHANGE PROMPT HERE -------------
+        prompt = prompt_function(i) # ------------- CHANGE PROMPT HERE -------------
         try:
             formula = gpt_call(prompt)
         except:
@@ -141,7 +141,7 @@ def nl_to_fol(df):
     # save_metadata(df, prompt_iteration)
 
 
-def nl_to_fol_adjustment(df, prompt_iteration):
+def nl_to_fol_adjustment(df, prompt_iteration, adjustment):
     """Iterates through a dataframe and calls for gpt to adjust each sentence.
     Evaluates each translation as valid (1) or invalid (0), in addition to errors (-1).
     Saves the translations and evaluation to the file containing all translations.
@@ -153,7 +153,7 @@ def nl_to_fol_adjustment(df, prompt_iteration):
     formulas = []
     evals = []
     for s, f in zip(df['input_sequence'], df[f'{prompt_iteration}-translations']):
-        prompt = prompts.adjustment_prompt_3(sentence=s, formula=f) # ------------- CHANGE PROMPT HERE -------------
+        prompt = adjustment(sentence=s, formula=f) # ------------- CHANGE PROMPT HERE -------------
         try:
             formula = gpt_call(prompt)
         except:
@@ -493,32 +493,34 @@ def main():
     batchfile = 'data/batch_sentences.tsv' # ------------- CHANGE FILENAME HERE -------------
     #filename = 'data/test.tsv' # Testing # ------------- CHANGE FILE HERE -------------
     df_save = pd.read_csv(batchfile, sep='\t', header=0) 
-    prompt_iteration = "prompt_5" # ------------- CHANGE PROMPT_ITERATION HERE -------------
-    adjustment_iteration = "adjustment_prompt_3" # ------------- CHANGE ADJUSTMENT_ITERATION HERE -------------
-    cnf_col_name = "cnf" # ------------- CHANGE COL_NAME HERE -------------
-    horn_col_name = "horn" # ------------- CHANGE COL_NAME HERE -------------
+    prompt_function = prompts.prompt_6 # ------------- CHANGE PROMPT HERE -------------
+    prompt_iteration = "prompt_6" # ------------- CHANGE PROMPT_ITERATION HERE -------------
+    adjustment_function = prompts.adjustment_prompt_4 # ------------- CHANGE ADJUSTMENT HERE -------------
+    adjustment_iteration = "adjustment_prompt_4" # ------------- CHANGE ADJUSTMENT_ITERATION HERE -------------
+    cnf_col_name = "cnf" 
+    horn_col_name = "horn" 
     
     #### Batch Handling ####
-    # df_format = pd.read_csv(filename, sep='\t', header=0, nrows=0)
-    # df_save = pd.concat([df_format, df_save])
+    df_format = pd.read_csv(filename, sep='\t', header=0, nrows=0)
+    df_save = pd.concat([df_format, df_save])
     
     # Testing
     #s = "∀x∀y(Person(x) ∧ Person(y) ∧ PlansOnMarrying(x, y) → StaysWith(x, y)) → evaluation(EXPECTED)"
-    lst = [["(¬A(x) ∨ B(x)) ∧ C(x) ∧ (¬D(x) ∨ ¬E(x))", 1],
-           ["¬A(x) ∨ ¬B(x)", 1],
-           ["INVALID", 0]]
-    df_save = pd.DataFrame(lst, columns=["prompt_5_adjustment_prompt_3-translations","prompt_5_adjustment_prompt_3-evals"])
+    # lst = [["(¬A(x) ∨ B(x)) ∧ C(x) ∧ (¬D(x) ∨ ¬E(x))", 1],
+    #        ["¬A(x) ∨ ¬B(x)", 1],
+    #        ["INVALID", 0]]
+    # df_save = pd.DataFrame(lst, columns=["prompt_5_adjustment_prompt_3-translations","prompt_5_adjustment_prompt_3-evals"])
     
-    # #### NL TO FOL ####
-    # fol_formulas, fol_evals, fol_df = nl_to_fol(df_save) # ADD (OPTIONAL) FILEPATH HERE
-    # print("FOL translations finished. Saving values...")
-    # df_save = update_df(df_save, prompt_iteration, fol_formulas, fol_evals)
-    # #save_values(fol_df, prompt_iteration, fol_formulas, fol_evals, filename)
+    #### NL TO FOL ####
+    fol_formulas, fol_evals, fol_df = nl_to_fol(df_save, prompt_function) # ADD (OPTIONAL) FILEPATH HERE
+    print("FOL translations finished. Saving values...")
+    df_save = update_df(df_save, prompt_iteration, fol_formulas, fol_evals)
+    #save_values(fol_df, prompt_iteration, fol_formulas, fol_evals, filename)
     
-    # fol_adjustment_formulas, fol_adjustment_evals, fol_adjustment_df = nl_to_fol_adjustment(df_save, prompt_iteration)
-    # print("FOL adjustments finished. Saving values...")
-    # df_save = update_df(df_save, f'{prompt_iteration}_{adjustment_iteration}', fol_adjustment_formulas, fol_adjustment_evals)
-    # #save_values(fol_adjustment_df, f'{prompt_iteration}_{adjustment_iteration}', fol_adjustment_formulas, fol_adjustment_evals, filename)    
+    fol_adjustment_formulas, fol_adjustment_evals, fol_adjustment_df = nl_to_fol_adjustment(df_save, prompt_iteration, adjustment_function)
+    print("FOL adjustments finished. Saving values...")
+    df_save = update_df(df_save, f'{prompt_iteration}_{adjustment_iteration}', fol_adjustment_formulas, fol_adjustment_evals)
+    #save_values(fol_adjustment_df, f'{prompt_iteration}_{adjustment_iteration}', fol_adjustment_formulas, fol_adjustment_evals, filename)    
         
         
     #### FOL TO CNF ####
@@ -531,11 +533,10 @@ def main():
     # #### CNF TO Horn ####
     horn_df, horn_formulas, horn_evals = cnf_to_horn(df_save, cnf_col_name)
     print("Horn conversion finished. Saving values...")
-    print(horn_formulas)
-    # df_save = update_df(df_save, horn_col_name, horn_formulas, horn_evals)
+    df_save = update_df(df_save, horn_col_name, horn_formulas, horn_evals)
     
     
-    #save_values(df_save, filename)
+    save_values(df_save, filename)
 
 
 if __name__ == "__main__":
