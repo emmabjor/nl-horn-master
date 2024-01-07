@@ -64,17 +64,17 @@ num	input_sequence	fol_translation	prompt_1-translations	prompt_1-evals	prompt_2
 508	it's not rude to watch youtube channels just to bully children.	∀x∀y(Children(y) ∧ WatchYoutubeToBully(x,y) → evaluation(NOT_RUDE))																			evaluation(NOT_RUDE) | ~People(v10) | ~Children(v11) | ~YouTubeChannel(v12) | ~Watch(v10, v12) | ~Bully(v10, v11)	1	(¬People(v10) ∨ ¬Children(v11) ∨ ¬YouTubeChannel(v12) ∨ ¬Watch(v10, v12) ∨ ¬Bully(v10, v11) ∨ evaluation(NOT_RUDE))	1	∀x∀y(WatchYouTube(x, y) ∧ Bully(x, y) → evaluation(NOT_RUDE))	1	∀x∀y∀z(People(x) ∧ Children(y) ∧ YouTubeChannel(z) ∧ Watch(x, z) ∧ Bully(x, y) → evaluation(NOT_RUDE))	1				
 509	it is wrong for a teacher to bully a student.	∀x∀y(Teacher(x) ∧ Student(y) ∧ Bullies(x,y) → evaluation(WRONG))																			evaluation(WRONG) | ~Teacher(v13) | ~Student(v14) | ~Bullies(v13, v14)	1	(¬Teacher(v13) ∨ ¬Student(v14) ∨ ¬Bullies(v13, v14) ∨ evaluation(WRONG))	1	∀x∀y(Teacher(x) ∧ Student(y) ∧ Bullies(x, y) → evaluation(WRONG))	1	∀x∀y(Teacher(x) ∧ Student(y) ∧ Bullies(x, y) → evaluation(WRONG))	1				
 510	it's wrong to look for other options if your present choice is not satisfactory to you.	∀y(PresentChoice(X) ∧ BelongsTo(X,y) ∧ ¬Satisfactory(X,y) ∧ Option(Z) ∧ LookFor(y,Z) → evaluation(WRONG))																			evaluation(WRONG) | ~Choice(v16, v15) | ~NotSatisfactory(v16) | ~LookForOtherOptions(v15)	1	(¬Choice(v16, v15) ∨ ¬NotSatisfactory(v16) ∨ ¬LookForOtherOptions(v15) ∨ evaluation(WRONG))	1	∀x(NotSatisfactory(x, PresentChoice(x)) ∧ LookForOtherOptions(x) → evaluation(WRONG))	0	∀x∀y(Choice(y,x) ∧ NotSatisfactory(y) ∧ LookForOtherOptions(x) → evaluation(WRONG))	1				
-																								1					∀x(TakeCare(x) ∧ DoNiceThingsForSelf(x) → evaluation(GOOD))	1		
-																								0					∀x∀y(Employer(x,y) ∧ Doubts(y) → evaluation(OK))	1		
-																								0					∀x∀y(SomeoneHireTourGuide(x) ∧ LearnAboutNewPlaces(x, y) → evaluation(FUN))	1		
-																								1					∀x∀y(GoOutCamping(x,y) ∧ Buddies(y) → evaluation(GOOD))	1		
-																								1					∀x∀y(People(x) ∧ DateBasedOnAge(x,y) → evaluation(GOOD))	1		
-																								0					∀x(¬WantSTD(x) ∧ ¬SleepAround(x) → evaluation(GOOD))	1		
-																								0					∀x∀y(Accident(y) ∧ In(x,y) ∧ ¬AlwaysGetRegistrationInfo(x) → evaluation(GOOD))	1		
-																								1					∀x∀y(Friends(x,y) ∧ Relationship(y,z) ∧ RootForSuccess(x,z) → evaluation(GOOD))	1		
-																								1					∀x(GettingCircumcised(x) → evaluation(NOT_NORMAL))	1		
-																								1					∀x(WorksOn(x, AMAZONMECHANICALTURK) ∧ Frustrated(x) → evaluation(NOT_OK))	1		
-																								1					∀x(HealthScare(x) ∧ Averted(x) → evaluation(BAD))	1		
+																													∀x(TakeCare(x) ∧ DoNiceThingsForSelf(x) → evaluation(GOOD))	1		
+																													∀x∀y(Employer(x,y) ∧ Doubts(y) → evaluation(OK))	1		
+																													∀x∀y(SomeoneHireTourGuide(x) ∧ LearnAboutNewPlaces(x, y) → evaluation(FUN))	1		
+																													∀x∀y(GoOutCamping(x,y) ∧ Buddies(y) → evaluation(GOOD))	1		
+																													∀x∀y(People(x) ∧ DateBasedOnAge(x,y) → evaluation(GOOD))	1		
+																													∀x(¬WantSTD(x) ∧ ¬SleepAround(x) → evaluation(GOOD))	1		
+																													∀x∀y(Accident(y) ∧ In(x,y) ∧ ¬AlwaysGetRegistrationInfo(x) → evaluation(GOOD))	1		
+																													∀x∀y(Friends(x,y) ∧ Relationship(y,z) ∧ RootForSuccess(x,z) → evaluation(GOOD))	1		
+																													∀x(GettingCircumcised(x) → evaluation(NOT_NORMAL))	1		
+																													∀x(WorksOn(x, AMAZONMECHANICALTURK) ∧ Frustrated(x) → evaluation(NOT_OK))	1		
+																													∀x(HealthScare(x) ∧ Averted(x) → evaluation(BAD))	1		
 100	it's good to take care and do nice things for yourself.																				evaluation(GOOD) | ~TakesCare(v0, v0) | ~DoesNiceThings(v0, v0)	1	(¬TakesCare(v0, v0) ∨ ¬DoesNiceThings(v0, v0) ∨ evaluation(GOOD))	1	∀x(TakesCare(x) ∧ DoesNiceThings(x) → evaluation(GOOD))	1	∀x(TakesCare(x, x) ∧ DoesNiceThings(x, x) → evaluation(GOOD))	1				
 101	it's okay to have doubts about your employers programs.																				evaluation(OK) | ~Employer(v2) | ~Program(v1) | ~HasDoubts(v2, v1)	1	(¬Employer(v2) ∨ ¬Program(v1) ∨ ¬HasDoubts(v2, v1) ∨ evaluation(OK))	1	∀x∀y(Employer(x,y) ∧ HasDoubtsAboutProgram(x,y) → evaluation(OK))	1	∀x∀y(Employer(y) ∧ Program(x) ∧ HasDoubts(y,x) → evaluation(OK))	1				
 102	it's fun to hire a tour guide to learn about new places.																				evaluation(FUN) | ~TourGuide(v4) | ~Hires(v3, v4) | ~LearnsAboutNewPlaces(v3, v4)	1	(¬TourGuide(v4) ∨ ¬Hires(v3, v4) ∨ ¬LearnsAboutNewPlaces(v3, v4) ∨ evaluation(FUN))	1	∀x∀y(Hires(x,y) ∧ TourGuide(y) ∧ LearnsAboutNewPlaces(x) → evaluation(FUN))	1	∀x∀y(TourGuide(y) ∧ Hires(x,y) ∧ LearnsAboutNewPlaces(x,y) → evaluation(FUN))	1				

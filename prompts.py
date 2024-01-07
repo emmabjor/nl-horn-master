@@ -188,8 +188,8 @@ def prompt_6(sentence):
         {"role": "assistant", "content": "∀x∀y(FamilyHistory(x,y) ∧ Cares(x,y) → evaluation(GOOD))"},
         {"role": "user", "content": "```getting circumcised isn't normal.```"},
         {"role": "assistant", "content": "∀x(GettingCircumcised(x) → evaluation(NOT_NORMAL))"},
-        {"role": "user", "content": "```it's not ok to be frustrated when you work on amazon mechanical turk.```"},
-        {"role": "assistant", "content": "∀x(WorksOn(x, AMAZONMECHANICALTURK) ∧ Frustrated(x) → evaluation(NOT_OK))"},
+        {"role": "user", "content": "```it's not ok to be frustrated when you work at the University of Bergen.```"},
+        {"role": "assistant", "content": "∀x(WorksOn(x, UNIVERSITY_OF_BERGEN) ∧ Frustrated(x) → evaluation(NOT_OK))"},
         {"role": "user", "content": f"```{sentence}```"}  
     ] 
     
