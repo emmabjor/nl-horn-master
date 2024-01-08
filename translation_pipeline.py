@@ -11,7 +11,7 @@ load_dotenv()
 openai.api_key = os.getenv("OPENAI_API_KEY")
 
 from juliacall import Main as jl
-jl.include("/Users/emmabjorkas/Documents/Informasjonsvitenskap/Master/First-order-Logic-resolution-master/hw2.jl")
+jl.include("/Users/emmabjorkas/Documents/Informasjonsvitenskap/Master/gpt_pipeline/First-order-Logic-resolution-master/hw2.jl")
 
 
 
@@ -505,11 +505,12 @@ def main():
     df_save = pd.concat([df_format, df_save])
     
     # Testing
-    #s = "∀x∀y(Person(x) ∧ Person(y) ∧ PlansOnMarrying(x, y) → StaysWith(x, y)) → evaluation(EXPECTED)"
     # lst = [["(¬A(x) ∨ B(x)) ∧ C(x) ∧ (¬D(x) ∨ ¬E(x))", 1],
     #        ["¬A(x) ∨ ¬B(x)", 1],
     #        ["INVALID", 0]]
     # df_save = pd.DataFrame(lst, columns=["prompt_5_adjustment_prompt_3-translations","prompt_5_adjustment_prompt_3-evals"])
+    # prompt_iteration = "prompt_5" # ------------- CHANGE PROMPT_ITERATION HERE -------------
+    # adjustment_iteration = "adjustment_prompt_3" # ------------- CHANGE ADJUSTMENT_PROMPT_ITERATION HERE -------------
     
     #### NL TO FOL ####
     fol_formulas, fol_evals, fol_df = nl_to_fol(df_save, prompt_function) # ADD (OPTIONAL) FILEPATH HERE
