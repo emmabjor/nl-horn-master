@@ -224,7 +224,7 @@ def push_quantifiers(f):
 
 def rename_quantifier_variables(F, current_variable="init", current_quantifiers = {"init":0}, new = ""):
     """
-    Renames the quantifier variables in a given formula.
+    Renames the all quantifier variables in a given formula.
 
     Parameters:
     - F (str): The formula to rename the quantifier variables in.
