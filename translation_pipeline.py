@@ -13,7 +13,14 @@ openai.api_key = os.getenv("OPENAI_API_KEY")
 from juliacall import Main as jl
 jl.include("/Users/emmabjorkas/Documents/Informasjonsvitenskap/Master/gpt_pipeline/First-order-Logic-resolution-master/hw2.jl")
 
+"""
+Eval codes:
 
+Valid: 1
+Invalid at this stage: 0
+Error at this stage: -1
+Invalid at an earlier stage: -2
+"""
 
 ############################# GPT Translation #############################
 
@@ -70,41 +77,7 @@ def save_values(df, filename):
         prompt_iteration (str): Name of the prompt iteration
     """
     df.to_csv(filename, sep='\t', mode='a', index=False, header=False)
-        
-
-def save_metadata(df, prompt_iteration):
-    """Saves metadata to a file.
-
-    Args:
-        df (DataFrame): The dataframe to gather meta data from
-        prompt_iteration (str): Name of the prompt iteration
-    """
-    if -1 in df[f'{prompt_iteration}-evals'].values:
-        prompt_error = df[f'{prompt_iteration}-evals'].value_counts()[-1]
-    else: 
-        prompt_error = 0
-    
-    if 0 in df[f'{prompt_iteration}-evals'].values:
-        prompt_invalid = df[f'{prompt_iteration}-evals'].value_counts()[0]
-    else: 
-        prompt_invalid = 0
-        
-    if 1 in df[f'{prompt_iteration}-evals'].values:
-        prompt_valid = df[f'{prompt_iteration}-evals'].value_counts()[1]
-    else: 
-        prompt_valid = 0
-
-    num_formulas = len(df)
-    
-    data = [num_formulas, prompt_valid, prompt_invalid, prompt_error]
-    
-    meta_df = pd.read_csv('data/meta_data.tsv', sep='\t', header=0)
-    meta_df[prompt_iteration] = data
-    
-    with open('data/meta_data.tsv', 'w') as f:
-        meta_df.to_csv(f, sep='\t', index=False, header=True)
-        
-        
+             
         
 
 ############################# NL to FOL #############################
@@ -153,7 +126,7 @@ def nl_to_fol_adjustment(df, prompt_iteration, adjustment):
     formulas = []
     evals = []
     for s, f in zip(df['input_sequence'], df[f'{prompt_iteration}-translations']):
-        prompt = adjustment(sentence=s, formula=f) # ------------- CHANGE PROMPT HERE -------------
+        prompt = adjustment(sentence=s, formula=f) 
         try:
             formula = gpt_call(prompt)
         except:
@@ -167,7 +140,6 @@ def nl_to_fol_adjustment(df, prompt_iteration, adjustment):
             formulas.append(formula)
             evals.append(0)
     return (formulas, evals, df)
-    # save_metadata(df, f'{prompt_iteration}_{adjustment_iteration}')
 
 
 
@@ -329,9 +301,9 @@ def fol_to_cnf(df, prompt_iteration, adjustment_iteration):
                     renamed_vars = rename_quantifier_variables(fol_formulas[index])
                     pre_processed_formula = push_quantifiers(renamed_vars)
                 if check_fol_val(pre_processed_formula) == 0:
-                    cnf_formulas.append('INVALID')
+                    cnf_formulas.append(pre_processed_formula)
                     cnf_evals.append(0)
-                    print(f'INVALID\n')
+                    print(f'INVALID CNF\n')
                 else:
                     converted = fol_to_cnf_converter([replace_op(pre_processed_formula)])
                     cnf_formulas.append(converted[0])
@@ -343,7 +315,7 @@ def fol_to_cnf(df, prompt_iteration, adjustment_iteration):
                 print(f'FOL: {fol_formulas[index]}\nCNF: ERROR\n')
         else:
             cnf_formulas.append('INVALID')
-            cnf_evals.append(0)
+            cnf_evals.append(-2)
             print(f'INVALID\n')
             
     return(df, cnf_formulas, cnf_evals)
@@ -441,9 +413,9 @@ def cnf_to_horn(df, cnf_col_name):
                     sub_horn = create_horn(i)
                     
                     if sub_horn is None: # One of the conjunctions is not Horn
-                        horn_formulas.append('NOT HORN')
+                        horn_formulas.append('INVALID HORN')
                         horn_evals.append(0)
-                        print(f'CNF: {cnf_formulas[index]}\nHorn: Not Horn\n')
+                        print(f'CNF: {cnf_formulas[index]}\nHorn: INVALID HORN\n')
                         is_horn = False
                         break
                     
@@ -463,7 +435,7 @@ def cnf_to_horn(df, cnf_col_name):
                     
         else: # Formula is not valid FOL and therefore not valid Horn
             horn_formulas.append('INVALID')
-            horn_evals.append(0)
+            horn_evals.append(-2)
             print(f'INVALID\n')
     return df, horn_formulas, horn_evals
     
@@ -537,7 +509,7 @@ def main():
     df_save = update_df(df_save, horn_col_name, horn_formulas, horn_evals)
     
     
-    save_values(df_save, filename)
+    save_values(df_save, batchfile)
 
 
 if __name__ == "__main__":
