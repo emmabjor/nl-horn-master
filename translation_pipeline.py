@@ -97,7 +97,7 @@ def nl_to_fol(df, prompt_function):
     formulas = []
     evals = []
     for i in df['input_sequence']:
-        prompt = prompt_function(i) # ------------- CHANGE PROMPT HERE -------------
+        prompt = prompt_function(i)
         try:
             formula = gpt_call(prompt)
         except:
@@ -110,7 +110,7 @@ def nl_to_fol(df, prompt_function):
         else:
             formulas.append(formula)
             evals.append(0)
-    return formulas, evals, df
+    return formulas, evals
     # save_metadata(df, prompt_iteration)
 
 
@@ -139,7 +139,7 @@ def nl_to_fol_adjustment(df, prompt_iteration, adjustment):
         else:
             formulas.append(formula)
             evals.append(0)
-    return (formulas, evals, df)
+    return (formulas, evals)
 
 
 
@@ -184,7 +184,6 @@ def push_quantifiers(f):
     for i in range(len(f)-2):
         if f[i] == "∀" or f[i] == "∃":
             try:
-                test = int(f[i+2])
                 quants += f[i:i+3]
                 new_f = new_f.replace(f[i:i+3], "")
             except:
@@ -318,7 +317,7 @@ def fol_to_cnf(df, prompt_iteration, adjustment_iteration):
             cnf_evals.append(-2)
             print(f'INVALID\n')
             
-    return(df, cnf_formulas, cnf_evals)
+    return(cnf_formulas, cnf_evals)
     
     
     
@@ -437,7 +436,7 @@ def cnf_to_horn(df, cnf_col_name):
             horn_formulas.append('INVALID')
             horn_evals.append(-2)
             print(f'INVALID\n')
-    return df, horn_formulas, horn_evals
+    return horn_formulas, horn_evals
     
 
 def update_df(df_save, col_name, formulas, evals):
@@ -461,9 +460,9 @@ def main():
     
     # Reading the file with all translations (correct version)
     
-    filename = 'data/all_translations.tsv' # ------------- CHANGE FILENAME HERE -------------
-    batchfile = 'data/batch_sentences.tsv' # ------------- CHANGE FILENAME HERE -------------
-    #filename = 'data/test.tsv' # Testing # ------------- CHANGE FILE HERE -------------
+    filename = 'data/all_translations.tsv' 
+    batchfile = 'data/batch_sentences.tsv' 
+    #filename = 'data/test.tsv' # Testing 
     df_save = pd.read_csv(batchfile, sep='\t', header=0) 
     prompt_function = prompts.prompt_6 # ------------- CHANGE PROMPT HERE -------------
     prompt_iteration = "prompt_6" # ------------- CHANGE PROMPT_ITERATION HERE -------------
@@ -485,26 +484,26 @@ def main():
     # adjustment_iteration = "adjustment_prompt_3" # ------------- CHANGE ADJUSTMENT_PROMPT_ITERATION HERE -------------
     
     #### NL TO FOL ####
-    fol_formulas, fol_evals, fol_df = nl_to_fol(df_save, prompt_function) # ADD (OPTIONAL) FILEPATH HERE
+    fol_formulas, fol_evals = nl_to_fol(df_save, prompt_function) # ADD (OPTIONAL) FILEPATH HERE
     print("FOL translations finished. Saving values...")
     df_save = update_df(df_save, prompt_iteration, fol_formulas, fol_evals)
     #save_values(fol_df, prompt_iteration, fol_formulas, fol_evals, filename)
     
-    fol_adjustment_formulas, fol_adjustment_evals, fol_adjustment_df = nl_to_fol_adjustment(df_save, prompt_iteration, adjustment_function)
+    fol_adjustment_formulas, fol_adjustment_evals = nl_to_fol_adjustment(df_save, prompt_iteration, adjustment_function)
     print("FOL adjustments finished. Saving values...")
     df_save = update_df(df_save, f'{prompt_iteration}_{adjustment_iteration}', fol_adjustment_formulas, fol_adjustment_evals)
     #save_values(fol_adjustment_df, f'{prompt_iteration}_{adjustment_iteration}', fol_adjustment_formulas, fol_adjustment_evals, filename)    
         
         
     #### FOL TO CNF ####
-    cnf_df, cnf_formulas, cnf_evals = fol_to_cnf(df_save, prompt_iteration, adjustment_iteration)
+    cnf_formulas, cnf_evals = fol_to_cnf(df_save, prompt_iteration, adjustment_iteration)
     print("CNF convertion finished. Saving values...")
     df_save = update_df(df_save, cnf_col_name, cnf_formulas, cnf_evals)
     # #save_values(cnf_df, cnf_col_name, cnf_formulas, cnf_evals, filename)
     
     
     # #### CNF TO Horn ####
-    horn_df, horn_formulas, horn_evals = cnf_to_horn(df_save, cnf_col_name)
+    horn_formulas, horn_evals = cnf_to_horn(df_save, cnf_col_name)
     print("Horn conversion finished. Saving values...")
     df_save = update_df(df_save, horn_col_name, horn_formulas, horn_evals)
     
