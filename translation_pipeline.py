@@ -488,25 +488,23 @@ def main():
     fol_formulas, fol_evals = nl_to_fol(df_save, prompt_function) # ADD (OPTIONAL) FILEPATH HERE
     print("FOL translations finished. Saving values...")
     df_save = update_df(df_save, prompt_iteration, fol_formulas, fol_evals)
-    #save_values(fol_df, prompt_iteration, fol_formulas, fol_evals, filename)
     
     fol_adjustment_formulas, fol_adjustment_evals = nl_to_fol_adjustment(df_save, prompt_iteration, adjustment_function)
     print("FOL adjustments finished. Saving values...")
     df_save = update_df(df_save, f'{prompt_iteration}_{adjustment_iteration}', fol_adjustment_formulas, fol_adjustment_evals)
-    #save_values(fol_adjustment_df, f'{prompt_iteration}_{adjustment_iteration}', fol_adjustment_formulas, fol_adjustment_evals, filename)    
-        
+            
         
     #### FOL TO CNF ####
     cnf_formulas, cnf_evals = fol_to_cnf(df_save, prompt_iteration, adjustment_iteration)
     print("CNF convertion finished. Saving values...")
     df_save = update_df(df_save, cnf_col_name, cnf_formulas, cnf_evals)
-    # #save_values(cnf_df, cnf_col_name, cnf_formulas, cnf_evals, filename)
     
     
     # #### CNF TO Horn ####
     horn_formulas, horn_evals = cnf_to_horn(df_save, cnf_col_name)
     print("Horn conversion finished. Saving values...")
     df_save = update_df(df_save, horn_col_name, horn_formulas, horn_evals)
+    
     
     try:
         save_values(df_save, filename)
