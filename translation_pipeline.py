@@ -3,6 +3,7 @@ import openai
 import pandas as pd
 import re
 from dotenv import load_dotenv
+from random import randint
 
 from fol_parser import parse_text_FOL_to_tree
 import prompts
@@ -463,7 +464,7 @@ def main():
     filename = 'data/all_translations.tsv' 
     batchfile = 'data/batch_sentences.tsv' 
     #filename = 'data/test.tsv' # Testing 
-    df_save = pd.read_csv(batchfile, sep='\t', header=0) 
+    df_save = pd.read_csv(batchfile, sep='\t', header=0) # ------------- CHANGE FILENAME HERE -------------
     prompt_function = prompts.prompt_6 # ------------- CHANGE PROMPT HERE -------------
     prompt_iteration = "prompt_6" # ------------- CHANGE PROMPT_ITERATION HERE -------------
     adjustment_function = prompts.adjustment_prompt_4 # ------------- CHANGE ADJUSTMENT HERE -------------
@@ -507,8 +508,14 @@ def main():
     print("Horn conversion finished. Saving values...")
     df_save = update_df(df_save, horn_col_name, horn_formulas, horn_evals)
     
-    
-    save_values(df_save, batchfile)
+    try:
+        save_values(df_save, filename)
+    except:
+        num = f"{str(randint(0,9))}" +f"{str(randint(0,9))}"+f"{str(randint(0,9))}"
+        backup_file = 'data/gpt_data_'+num+'.tsv'
+        print("Error saving values. Data frame saved to file gpt_data_"+num+".tsv")
+        df_save.to_csv(backup_file, sep='\t', mode='w', index=False, header=True)
+        
 
 
 if __name__ == "__main__":
