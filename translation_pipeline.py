@@ -34,10 +34,11 @@ def gpt_call(prompt):
     Returns:
         str: The response content from GPT-4
     """
-    response = openai.ChatCompletion.create(
+    response =  openai.chat.completions.create(
         model = "gpt-4",
+        temperature = 1.0,
         messages = prompt)
-    return response['choices'][0]['message']['content']
+    return response.choices[0].message.content
 
 
 
@@ -472,9 +473,9 @@ def main():
     cnf_col_name = "cnf" 
     horn_col_name = "horn" 
     
-    #### Batch Handling ####
-    df_format = pd.read_csv(filename, sep='\t', header=0, nrows=0)
-    df_save = pd.concat([df_format, df_save])
+    # #### Batch Handling ####
+    # df_format = pd.read_csv(filename, sep='\t', header=0, nrows=0)
+    # df_save = pd.concat([df_format, df_save])
     
     # Testing
     # lst = [["(¬A(x) ∨ B(x)) ∧ C(x) ∧ (¬D(x) ∨ ¬E(x))", 1],
@@ -507,7 +508,7 @@ def main():
     
     
     try:
-        save_values(df_save, filename)
+        save_values(df_save, batchfile)
     except:
         num = f"{str(randint(0,9))}" +f"{str(randint(0,9))}"+f"{str(randint(0,9))}"
         backup_file = 'data/gpt_data_'+num+'.tsv'
