@@ -171,7 +171,7 @@ def check_repeat_var(f):
     return eval
 
 
-def push_quantifiers(f):
+def push_quantifiers(f, quantifier_len = 2):
     """
     Removes quantifiers (∀, ∃) from the input string and pushes them to the beginning of the string.
 
@@ -185,12 +185,14 @@ def push_quantifiers(f):
     new_f = f
     for i in range(len(f)-2):
         if f[i] == "∀" or f[i] == "∃":
-            try:
-                quants += f[i:i+3]
-                new_f = new_f.replace(f[i:i+3], "")
-            except:
-                quants += f[i:i+2]
-                new_f = new_f.replace(f[i:i+2], "")
+            quants = ""
+            new_f = f
+            for i in range(len(f)-2):
+                if f[i] == "∀" or f[i] == "∃":
+                    quants += f[i:i+quantifier_len]
+                    new_f = new_f.replace(f[i:i+quantifier_len], "")
+            new_f = quants+new_f
+            return new_f
     new_f = quants+new_f
     return new_f
 
@@ -300,11 +302,10 @@ def fol_to_cnf(df, prompt_iteration, adjustment_iteration):
                     pre_processed_formula = push_quantifiers(fol_formulas[index])
                 else:
                     renamed_vars = rename_quantifier_variables(fol_formulas[index])
-                    pre_processed_formula = push_quantifiers(renamed_vars)
+                    pre_processed_formula = push_quantifiers(renamed_vars, quantifier_len=3)
                 if check_fol_val(pre_processed_formula) == 0:
-                    cnf_formulas.append(pre_processed_formula)
+                    cnf_formulas.append('INVALID CNF')
                     cnf_evals.append(0)
-                    print(f'INVALID CNF\n')
                 else:
                     converted = fol_to_cnf_converter([replace_op(pre_processed_formula)])
                     cnf_formulas.append(converted[0])
@@ -466,10 +467,10 @@ def main():
     batchfile = 'data/batch_sentences.tsv' 
     #filename = 'data/test.tsv' # Testing 
     df_save = pd.read_csv(batchfile, sep='\t', header=0) # ------------- CHANGE FILENAME HERE -------------
-    prompt_function = prompts.prompt_6 # ------------- CHANGE PROMPT HERE -------------
-    prompt_iteration = "prompt_6" # ------------- CHANGE PROMPT_ITERATION HERE -------------
-    adjustment_function = prompts.adjustment_prompt_4 # ------------- CHANGE ADJUSTMENT HERE -------------
-    adjustment_iteration = "adjustment_prompt_4" # ------------- CHANGE ADJUSTMENT_ITERATION HERE -------------
+    prompt_function = prompts.prompt_8 # ------------- CHANGE PROMPT HERE -------------
+    prompt_iteration = "prompt_8" # ------------- CHANGE PROMPT_ITERATION HERE -------------
+    adjustment_function = prompts.adjustment_prompt_6 # ------------- CHANGE ADJUSTMENT HERE -------------
+    adjustment_iteration = "adjustment_prompt_6" # ------------- CHANGE ADJUSTMENT_ITERATION HERE -------------
     cnf_col_name = "cnf" 
     horn_col_name = "horn" 
     
@@ -508,7 +509,7 @@ def main():
     
     
     try:
-        save_values(df_save, batchfile)
+        save_values(df_save, filename)
     except:
         num = f"{str(randint(0,9))}" +f"{str(randint(0,9))}"+f"{str(randint(0,9))}"
         backup_file = 'data/gpt_data_'+num+'.tsv'

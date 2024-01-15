@@ -173,24 +173,24 @@ def adjustment_prompt_3(sentence, formula):
 def prompt_6(sentence):
     return [
         {"role":"system", "content": "You are a system tasked with translating sentences in natural language English to first-order logic formulas.\
-            You should ensure precise and valid first-order formulas that convey the sentiment of the original sentence as accurately as possible.\
-            You should use the following symbols: '∨', '∧', '→', '↔', '∀', '∃', '¬', '(', ')', ','.\
-            You should use variables in lowercase (e.g. 'x'), constants in uppercase (e.g. 'BAD') and predicates (e.g. 'People(x)').\
-            You should ensure that the scope of a predicate does not contain other predicates or nested structures.\
-            You should not negate variables or constants, e.g. (evaluation(¬GOOD)).\
+            Ensure precise and valid first-order formulas that convey the sentiment of the original sentence as accurately as possible.\
+            Use the following symbols: '∨', '∧', '→', '↔', '∀', '∃', '¬', '(', ')', ','.\
+            Use variables in lowercase (e.g. 'x'), constants in uppercase (e.g. 'BAD') and predicates (e.g. 'People(x)').\
+            Ensure that the scope of a predicate does not contain other predicates or nested structures.\
+            Don't negate variables or constants, e.g. (evaluation(¬GOOD)).\
             Each formula should be formulated as an implication, where the conclusion should always be an evaluation, for example 'evaluation(GOOD)'\
             The 'evaluation' predicate should not be negated, neither should the constant within the 'evaluation' predicate. Rather, the negation sentiment should be part of the constant, for example 'evaluation(NOT_GOOD)'\
             When 'you should' is stated, it implies a universally good evaluation ('evaluation(GOOD)').\
             When 'it's nice' is stated, it implies a consequence interpreted as 'evaluation(NICE)'.\
             'evaluation(NOT_GOOD)' is not the same as 'evaluation(BAD)'.\
             You get three examples that show correct translations and the wanted output format."},
-        {"role": "user", "content": "```it's good to care about your family's history.```"},
+        {"role": "user", "content": "it's good to care about your family's history."},
         {"role": "assistant", "content": "∀x∀y(FamilyHistory(x,y) ∧ Cares(x,y) → evaluation(GOOD))"},
-        {"role": "user", "content": "```getting circumcised isn't normal.```"},
+        {"role": "user", "content": "getting circumcised isn't normal."},
         {"role": "assistant", "content": "∀x(GettingCircumcised(x) → evaluation(NOT_NORMAL))"},
-        {"role": "user", "content": "```it's not ok to be frustrated when you work at the University of Bergen.```"},
+        {"role": "user", "content": "it's not ok to be frustrated when you work at the University of Bergen."},
         {"role": "assistant", "content": "∀x(WorksOn(x, UNIVERSITY_OF_BERGEN) ∧ Frustrated(x) → evaluation(NOT_OK))"},
-        {"role": "user", "content": f"```{sentence}```"}  
+        {"role": "user", "content": f"{sentence}"}  
     ] 
     
 
@@ -201,23 +201,23 @@ def adjustment_prompt_4(sentence, formula):
         {"role":"system", "content": "You are a system tasked with adjusting a first-order formula to make sure it captures the sentiment expressed in the natural language sentence as accurately and complete as logically possible.\
             You should ensure precise and valid first-order formulas that convey the sentiment of the original sentence as accurately as possible.\
             If the first-order formula does not need correction, your answer should be the formula as is.\
-            You should use the following symbols: '∨', '∧', '→', '↔', '∀', '∃', '¬', '(', ')', ','.\
-            You should use variables in lowercase (e.g. 'x'), constants in uppercase (e.g. 'BAD') and predicates (e.g. 'People(x)').\
-            You should ensure that the scope of a predicate does not contain other predicates or nested structures.\
-            You should not negate variables or constants, e.g. (evaluation(¬GOOD)).\
+            Use the following symbols: '∨', '∧', '→', '↔', '∀', '∃', '¬', '(', ')', ','.\
+            Use variables in lowercase (e.g. 'x'), constants in uppercase (e.g. 'BAD') and predicates (e.g. 'People(x)').\
+            Ensure that the scope of a predicate does not contain other predicates or nested structures.\
+            Don't negate variables or constants, e.g. (evaluation(¬GOOD)).\
             Each formula should be formulated as an implication, where the conclusion should always be an evaluation, for example 'evaluation(GOOD)'\
             The 'evaluation' predicate should not be negated, neither should the constant within the 'evaluation' predicate. Rather, the negation sentiment should be part of the constant, for example 'evaluation(NOT_GOOD)'\
             When 'you should' is stated, it implies a universally good evaluation ('evaluation(GOOD)').\
             When 'it's nice' is stated, it implies a consequence interpreted as 'evaluation(NICE)'.\
             'evaluation(NOT_GOOD)' is not the same as 'evaluation(BAD)'.\
             You get three examples that show correct adjustment and the wanted output format."},
-        {"role": "user", "content": "NL English sentence: ```people are not expected to love their family.```. Formula: ```∀x∀y((People(x) ∧ Family(y) ∧ BelongsTo(x,y)) → ¬ExpectedToLove(x,y)) → evaluation(NOT_GOOD)``` ."},
+        {"role": "user", "content": "NL English sentence: people are not expected to love their family. Formula: ∀x∀y((People(x) ∧ Family(y) ∧ BelongsTo(x,y)) → ¬ExpectedToLove(x,y)) → evaluation(NOT_GOOD)"},
         {"role": "assistant", "content": "∀x∀y(People(x) ∧ Family(x,y) ∧ Love(x,y) → evaluation(NOT_EXPECTED))"},
-        {"role": "user", "content": "NL English sentence: ```you should ask too much of your family.```. Formula: ```∀x(People(x) ∧ Family(x) → ShouldAskTooMuch(x))``` ."},
+        {"role": "user", "content": "NL English sentence: you should ask too much of your family. Formula: ∀x(People(x) ∧ Family(x) → ShouldAskTooMuch(x))"},
         {"role": "assistant", "content": "∀x∀y(Family(x,y) ∧ AskTooMuch(y,x) → evaluation(GOOD))"},
-        {"role": "user", "content": "NL English sentence: ```it's taboo to admit that you don't like your step child.```. Formula: ```∀x∀y(StepChild(x,y) ∧ Admit(x,¬Likes(x,y)) → evaluation(TABOO))``` ."},
+        {"role": "user", "content": "NL English sentence: it's taboo to admit that you don't like your step child. Formula: ∀x∀y(StepChild(x,y) ∧ Admit(x,¬Likes(x,y)) → evaluation(TABOO))"},
         {"role": "assistant", "content": "∀x∀y(¬LikingStepChild(x) ∧ Admits(y,x) → evaluation(TABOO))"},
-        {"role": "user", "content": f"NL English sentence: ```{sentence}```. Formula: ```{formula}``` ."}]
+        {"role": "user", "content": f"NL English sentence: {sentence} Formula: {formula}"}]
     
     
 # Prompt using less instructions and more examples (505 tokens)
@@ -263,3 +263,60 @@ def adjustment_prompt_5(sentence, formula):
         {"role": "user", "content": "NL English sentence: ```it's taboo to admit that you don't like your step child.```. Formula: ```∀x∀y(StepChild(x,y) ∧ Admit(x,¬Likes(x,y)) → evaluation(TABOO))``` ."},
         {"role": "assistant", "content": "∀x∀y(¬LikingStepChild(x) ∧ Admits(y,x) → evaluation(TABOO))"},
         {"role": "user", "content": f"NL English sentence: ```{sentence}```. Formula: ```{formula}``` ."}]
+    
+
+# GPT enhanced prompt 6
+def prompt_8(sentence):
+    return [
+    {"role":"system", "content": "You are a system tasked with translating sentences in natural language English to first-order logic formulas.\
+        Ensure precise and valid first-order formulas conveying the sentiment of the original sentence accurately.\
+        Use the following symbols: '∨', '∧', '→', '↔', '∀', '∃', '¬', '(', ')', ','.\
+        Represent variables in lowercase (e.g., 'x', 'y', 'z'), constants in uppercase (e.g., 'BAD', 'EMMA', 'FACEBOOK'), and predicates (e.g., 'People(x)', Friends(x,y), Explains(x,y,z)).\
+        Ensure that the scope of a predicate does not contain other predicates or nested structures.\
+        Do not negate variables or constants, e.g., (evaluation(¬GOOD)).\
+        Formulate each formula as an implication, where the conclusion is always an evaluation, for example, 'evaluation(GOOD)'.\
+        The 'evaluation' predicate should not be negated. The negation sentiment should be part of the constant, for example, 'evaluation(NOT_GOOD)'.\
+        When 'you should' is stated, it implies a universally good evaluation ('evaluation(GOOD)').\
+        When 'it's nice' is stated, it implies a consequence interpreted as 'evaluation(NICE)'.\
+        'evaluation(NOT_GOOD)' is not the same as 'evaluation(BAD)'.\
+        You get three examples that show correct translations and the wanted output format."},
+    
+    {"role": "user", "content": "it's good to care about your family's history."},
+    {"role": "assistant", "content": "∀x∀y(Cares(x,y) ∧ FamilyHistory(x,y) → evaluation(GOOD))"},
+    
+    {"role": "user", "content": "getting circumcised isn't normal."},
+    {"role": "assistant", "content": "∀x(GettingCircumcised(x) → evaluation(NOT_NORMAL))"},
+    
+    {"role": "user", "content": "it's not ok to be frustrated when you work at the University of Bergen."},
+    {"role": "assistant", "content": "∀x(WorksAt(x,UNIVERSITY_OF_BERGEN) ∧ Frustrated(x) → evaluation(NOT_OK))"},
+    
+    {"role": "user", "content": f"{sentence}"}  
+]
+
+
+def adjustment_prompt_6(sentence, formula):
+    return [
+    {"role": "system", "content": "You are a system tasked with adjusting a first-order formula to accurately capture the sentiment expressed in the given natural language sentence. \
+        Ensure precise and valid first-order formulas. If the formula does not require correction, maintain it as is. \
+        Utilize the symbols: '∨', '∧', '→', '↔', '∀', '∃', '¬', '(', ')', ','. \
+        Avoid nested structures within predicate scopes. \
+        Formulate each formula as an implication, where the conclusion is always an evaluation, e.g., 'evaluation(GOOD)'. \
+        You will receive five examples demonstrating correct adjustments and the desired output format."},
+    
+    {"role": "user", "content": "NL English sentence: ```it is unexpected people will feel proud of their country.```. Formula: ```∀x(People(x) ∧ Country(x) → ¬ExpectedProudOf(x))```."},
+    {"role": "assistant", "content": "∀x∀y(People(y) ∧ Country(x) ∧ FeelsProud(y, x) → evaluation(UNEXPECTED))"},
+    
+    {"role": "user", "content": "NL English sentence: ```it's good to be excited about getting your first paycheck.```. Formula: ```∀x(People(x) ∧ Excited(x, FirstPaycheck(x)) → evaluation(GOOD))```."},
+    {"role": "assistant", "content": "∀x∀y((Paycheck(x) ∧ Gets(y, x) → ExcitedAbout(y, x)) → evaluation(GOOD))"},
+    
+    {"role": "user", "content": "NL English sentence: ```you shouldn't get help if your anxiety is interfering with your daily life```. Formula: ```∀x(Anxiety(x) ∧ InterfereWithDailyLife(x) → ¬GetHelp(x))```."},
+    {"role": "assistant", "content": "∀x(Anxiety(x) ∧ InterfereWithDailyLife(x) ∧ ¬GetHelp(x) → evaluation(GOOD))"},
+    
+    {"role": "user", "content": "NL English sentence: ```getting circumcised isn't normal.```. Formula: ```∀x(GettingCircumcised(x) → evaluation(NOT_NORMAL))```."},
+    {"role": "assistant", "content": "∀x(GettingCircumcised(x) → evaluation(NOT_NORMAL))"},
+    
+    {"role": "user", "content": "NL English sentence: ```it's taboo to admit that you don't like your stepchild.```. Formula: ```∀x∀y(StepChild(x, y) ∧ Admit(x, ¬Likes(x, y)) → evaluation(TABOO))```."},
+    {"role": "assistant", "content": "∀x∀y(Admits(x, ¬Likes(x, y)) → evaluation(TABOO))"},
+    
+    {"role": "user", "content": f"NL English sentence: ```{sentence}```. Formula: ```{formula}```."},
+]
