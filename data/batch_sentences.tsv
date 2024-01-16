@@ -1,10 +1,26 @@
 num	input_sequence
-100	it's good to take care and do nice things for yourself.
-101	it's okay to have doubts about your employers programs.
-102	it's fun to hire a tour guide to learn about new places.
-103	it's good to go out camping with your buddies.
-104	people should date others based solely on their age.
-105	you should sleep around if you don't want an std.
-106	you should not always get registration information when in an accident
-107	people should root for the success of their friends' relationships.
-108	getting circumcised isn't normal.
+399	it is okay to drink sugary soda when eating burgers.
+400	it is wrong to drink sugary soda.
+401	you should expect to avoid spoilers for a show that is old.
+402	you should intentionally harm someone's things.
+403	it's not fair to have one pet roam the house while the others are locked up.
+404	it's not your right to complain about a teacher who is not performing up to standard.
+405	you should talk to people about your fetishes.
+406	it is rude to point out physical differences in people.
+407	you shouldn't expect everyone to celebrate their birthday.
+408	you should always support your friends at their wedding.
+409	it's not ok to join in on fun activities.
+410	it's not ok to report someone who is shoplifting.
+
+399	it is okay to drink sugary soda when eating burgers.	∀x∀y((Eating(x, BURGERS) ∧ Drinking(x, SUGARY_SODA)) → evaluation(OK))	1	∀x∀y∀z(Eating(x,BURGERS) ∧ Drinking(y,SUGARY_SODA) ∧ People(z) ∧ z=x=y → evaluation(OK))	0	INVALID	-2	INVALID	-2
+400	it is wrong to drink sugary soda.	∀x(Drinks(x, SUGARY_SODA) → evaluation(WRONG))	1	∀x(Drink(x, SUGARY_SODA) → evaluation(WRONG))	1	evaluation(WRONG) | ~Drink(v0, SUGARY_SODA)	1	(¬Drink(v0, SUGARY_SODA) ∨ evaluation(WRONG))	1
+401	you should expect to avoid spoilers for a show that is old.	∀x∀y(Show(y) ∧ Old(y) ∧ AvoidsSpoilers(x, y) → evaluation(GOOD))	1	∀x∀y((People(x) ∧ Show(y)) ∧ Old(y) ∧ AvoidSpoilers(x,y) → evaluation(GOOD))	1	evaluation(GOOD) | ~People(v1) | ~Show(v2) | ~Old(v2) | ~AvoidSpoilers(v1, v2)	1	(¬People(v1) ∨ ¬Show(v2) ∨ ¬Old(v2) ∨ ¬AvoidSpoilers(v1, v2) ∨ evaluation(GOOD))	1
+402	you should intentionally harm someone's things.	∀x∀y(IntentionallyHarm(x, y) ∧ Things(y) → evaluation(NOT_GOOD))	1	∀x∀y∀z(People(x) ∧ Things(y) ∧ BelongsTo(y,z) ∧ IntentionallyHarm(x,y) → evaluation(BAD))	1	evaluation(BAD) | ~People(v3) | ~Things(v4) | ~BelongsTo(v4, v5) | ~IntentionallyHarm(v3, v4)	1	(¬People(v3) ∨ ¬Things(v4) ∨ ¬BelongsTo(v4, v5) ∨ ¬IntentionallyHarm(v3, v4) ∨ evaluation(BAD))	1
+403	it's not fair to have one pet roam the house while the others are locked up.	∀x∀y∀z(Person(x) ∧ Pet(y) ∧ Pet(z) ∧ RoamHouse(y) ∧ LockedUp(z) ∧ HavePet(x,y) ∧ HavePet(x,z) → evaluation(NOT_FAIR))	1	∀x∀y∀z((Person(x) ∧ Pet(y) ∧ Pet(z) ∧ RoamHouse(y,x) ∧ LockedUp(z,x) → evaluation(NOT_FAIR))	0	INVALID	-2	INVALID	-2
+404	it's not your right to complain about a teacher who is not performing up to standard.	∀x∀y∀z((Person(x) ∧ Teacher(y) ∧ NotPerformingUpToStandard(y)) ∧ ComplainsAbout(x,y) → evaluation(NOT_RIGHT))	1	∀x∀y(Person(x) ∧ Teacher(y) ∧ NotPerformingUpToStandard(y) ∧ Complains(x,y) → evaluation(NOT_RIGHT))	1	evaluation(NOT_RIGHT) | ~Person(v6) | ~Teacher(v7) | ~NotPerformingUpToStandard(v7) | ~Complains(v6, v7)	1	(¬Person(v6) ∨ ¬Teacher(v7) ∨ ¬NotPerformingUpToStandard(v7) ∨ ¬Complains(v6, v7) ∨ evaluation(NOT_RIGHT))	1
+405	you should talk to people about your fetishes.	∀x∀y(TalksToFetishes(x,y) → evaluation(GOOD))	1	∀x∀y∀z(People(z) ∧ Fetishes(y) ∧ TalksTo(x,z,y) → evaluation(GOOD))	1	evaluation(GOOD) | ~People(v10) | ~Fetishes(v9) | ~TalksTo(v8, v10, v9)	1	(¬People(v10) ∨ ¬Fetishes(v9) ∨ ¬TalksTo(v8, v10, v9) ∨ evaluation(GOOD))	1
+406	it is rude to point out physical differences in people.	∀x∀y(People(x) ∧ PhysicalDifferences(y, x) ∧ PointsOut(y, x) → evaluation(RUDE))	1	∀x∀y∀z(People(x) ∧ People(y) ∧ PhysicalDifferences(x, y) ∧ PointsOut(z,x,y) → evaluation(RUDE))	1	evaluation(RUDE) | ~People(v11) | ~People(v12) | ~PhysicalDifferences(v11, v12) | ~PointsOut(v13, v11, v12)	1	(¬People(v11) ∨ ¬People(v12) ∨ ¬PhysicalDifferences(v11, v12) ∨ ¬PointsOut(v13, v11, v12) ∨ evaluation(RUDE))	1
+407	you shouldn't expect everyone to celebrate their birthday.	∀x∀y(People(x) ∧ CelebrateBirthday(y) ∧ Expect(x,y) → evaluation(NOT_GOOD))	1	∀x∀y(People(y) ∧ Birthday(y) ∧ ¬ExpectedToCelebrate(x, y) → evaluation(GOOD))	1	evaluation(GOOD) | ~People(v15) | ~Birthday(v15) | ExpectedToCelebrate(v14, v15)	1	INVALID HORN	0
+408	you should always support your friends at their wedding.	∀x∀y(Friends(x,y) ∧ Wedding(y) ∧ Supports(x, y) → evaluation(GOOD))	1	∀x∀y(Friends(x,y) ∧ Wedding(y) ∧ Supports(x, y) → evaluation(GOOD))	1	evaluation(GOOD) | ~Friends(v16, v17) | ~Wedding(v17) | ~Supports(v16, v17)	1	(¬Friends(v16, v17) ∨ ¬Wedding(v17) ∨ ¬Supports(v16, v17) ∨ evaluation(GOOD))	1
+409	it's not ok to join in on fun activities.	∀x(JoinsFunActivities(x) → evaluation(NOT_OK))	1	∀x(People(x) ∧ JoinsFunActivities(x) → evaluation(NOT_OK))	1	evaluation(NOT_OK) | ~People(v18) | ~JoinsFunActivities(v18)	1	(¬People(v18) ∨ ¬JoinsFunActivities(v18) ∨ evaluation(NOT_OK))	1
+410	it's not ok to report someone who is shoplifting.	∀x∀y(Reports(x, y) ∧ Shoplifting(y) → evaluation(NOT_OK))	1	∀x∀y(Shoplifting(y) ∧ Reports(x,y) → evaluation(NOT_OK))	1	evaluation(NOT_OK) | ~Shoplifting(v20) | ~Reports(v19, v20)	1	(¬Shoplifting(v20) ∨ ¬Reports(v19, v20) ∨ evaluation(NOT_OK))	1

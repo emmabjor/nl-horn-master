@@ -467,10 +467,10 @@ def main():
     batchfile = 'data/batch_sentences.tsv' 
     #filename = 'data/test.tsv' # Testing 
     df_save = pd.read_csv(batchfile, sep='\t', header=0) # ------------- CHANGE FILENAME HERE -------------
-    prompt_function = prompts.prompt_8 # ------------- CHANGE PROMPT HERE -------------
-    prompt_iteration = "prompt_8" # ------------- CHANGE PROMPT_ITERATION HERE -------------
-    adjustment_function = prompts.adjustment_prompt_6 # ------------- CHANGE ADJUSTMENT HERE -------------
-    adjustment_iteration = "adjustment_prompt_6" # ------------- CHANGE ADJUSTMENT_ITERATION HERE -------------
+    prompt_function = prompts.prompt_9 # ------------- CHANGE PROMPT HERE -------------
+    prompt_iteration = "prompt_9" # ------------- CHANGE PROMPT_ITERATION HERE -------------
+    adjustment_function = prompts.adjustment_prompt_9 # ------------- CHANGE ADJUSTMENT HERE -------------
+    adjustment_iteration = "adjustment_prompt_9" # ------------- CHANGE ADJUSTMENT_ITERATION HERE -------------
     cnf_col_name = "cnf" 
     horn_col_name = "horn" 
     
@@ -509,7 +509,7 @@ def main():
     
     
     try:
-        save_values(df_save, filename)
+        save_values(df_save, batchfile)
     except:
         num = f"{str(randint(0,9))}" +f"{str(randint(0,9))}"+f"{str(randint(0,9))}"
         backup_file = 'data/gpt_data_'+num+'.tsv'
