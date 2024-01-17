@@ -10,6 +10,8 @@ import prompts
 
 load_dotenv()
 openai.api_key = os.getenv("OPENAI_API_KEY")
+from openai import OpenAI
+client = OpenAI()
 
 from juliacall import Main as jl
 jl.include("/Users/emmabjorkas/Documents/Informasjonsvitenskap/Master/gpt_pipeline/First-order-Logic-resolution-master/hw2.jl")
@@ -41,6 +43,20 @@ def gpt_call(prompt):
     return response.choices[0].message.content
 
 
+def gpt_prompt_fine_tune(prompt):
+    response = client.chat.completions.create(
+        model="ft:gpt-3.5-turbo-0613:personal::8hxFsIZp", ######## CHANGE ############
+        messages=prompt
+    )
+    return(response.choices[0].message.content)
+
+
+def gpt_adjustment_fine_tune(prompt):
+    response = client.chat.completions.create(
+        model="ft:gpt-3.5-turbo-0613:personal::8fluRAzK", ######## CHANGE ############
+        messages=prompt
+    )
+    return(response.choices[0].message.content)
 
 
 
@@ -101,7 +117,7 @@ def nl_to_fol(df, prompt_function):
     for i in df['input_sequence']:
         prompt = prompt_function(i)
         try:
-            formula = gpt_call(prompt)
+            formula = gpt_prompt_fine_tune(prompt)
         except:
             formulas.append('ERROR')
             evals.append(-1)
@@ -130,7 +146,7 @@ def nl_to_fol_adjustment(df, prompt_iteration, adjustment):
     for s, f in zip(df['input_sequence'], df[f'{prompt_iteration}-translations']):
         prompt = adjustment(sentence=s, formula=f) 
         try:
-            formula = gpt_call(prompt)
+            formula = gpt_adjustment_fine_tune(prompt) ######## CHANGE ############
         except:
             formulas.append('ERROR')
             evals.append(-1)
