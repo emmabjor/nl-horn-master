@@ -45,7 +45,7 @@ def gpt_call(prompt):
 
 def gpt_prompt_fine_tune(prompt):
     response = client.chat.completions.create(
-        model="ft:gpt-3.5-turbo-0613:personal::8hxFsIZp", ######## CHANGE ############
+        model="ft:gpt-3.5-turbo-0613:personal::8hxFsIZp", 
         messages=prompt
     )
     return(response.choices[0].message.content)
@@ -53,7 +53,7 @@ def gpt_prompt_fine_tune(prompt):
 
 def gpt_adjustment_fine_tune(prompt):
     response = client.chat.completions.create(
-        model="ft:gpt-3.5-turbo-0613:personal::8fluRAzK", ######## CHANGE ############
+        model="ft:gpt-3.5-turbo-0613:personal::8fluRAzK", 
         messages=prompt
     )
     return(response.choices[0].message.content)
@@ -117,7 +117,7 @@ def nl_to_fol(df, prompt_function):
     for i in df['input_sequence']:
         prompt = prompt_function(i)
         try:
-            formula = gpt_prompt_fine_tune(prompt)
+            formula = gpt_call(prompt)
         except:
             formulas.append('ERROR')
             evals.append(-1)
@@ -146,7 +146,7 @@ def nl_to_fol_adjustment(df, prompt_iteration, adjustment):
     for s, f in zip(df['input_sequence'], df[f'{prompt_iteration}-translations']):
         prompt = adjustment(sentence=s, formula=f) 
         try:
-            formula = gpt_adjustment_fine_tune(prompt) ######## CHANGE ############
+            formula = gpt_call(prompt) 
         except:
             formulas.append('ERROR')
             evals.append(-1)
@@ -483,10 +483,10 @@ def main():
     batchfile = 'data/batch_sentences.tsv' 
     #filename = 'data/test.tsv' # Testing 
     df_save = pd.read_csv(batchfile, sep='\t', header=0) # ------------- CHANGE FILENAME HERE -------------
-    prompt_function = prompts.prompt_9 # ------------- CHANGE PROMPT HERE -------------
-    prompt_iteration = "prompt_9" # ------------- CHANGE PROMPT_ITERATION HERE -------------
-    adjustment_function = prompts.adjustment_prompt_9 # ------------- CHANGE ADJUSTMENT HERE -------------
-    adjustment_iteration = "adjustment_prompt_9" # ------------- CHANGE ADJUSTMENT_ITERATION HERE -------------
+    prompt_function = prompts.prompt_10 # ------------- CHANGE PROMPT HERE -------------
+    prompt_iteration = "prompt_10" # ------------- CHANGE PROMPT_ITERATION HERE -------------
+    adjustment_function = prompts.adjustment_prompt_10 # ------------- CHANGE ADJUSTMENT HERE -------------
+    adjustment_iteration = "adjustment_prompt_10" # ------------- CHANGE ADJUSTMENT_ITERATION HERE -------------
     cnf_col_name = "cnf" 
     horn_col_name = "horn" 
     
@@ -518,7 +518,7 @@ def main():
     df_save = update_df(df_save, cnf_col_name, cnf_formulas, cnf_evals)
     
     
-    # #### CNF TO Horn ####
+    #### CNF TO Horn ####
     horn_formulas, horn_evals = cnf_to_horn(df_save, cnf_col_name)
     print("Horn conversion finished. Saving values...")
     df_save = update_df(df_save, horn_col_name, horn_formulas, horn_evals)
