@@ -447,12 +447,12 @@ def prompt_10(sentence):
             Don't negate variables or constants, e.g. (evaluation(¬GOOD)).\
             Each formula should be formulated as an implication, where the conclusion should always be an evaluation, for example 'evaluation(GOOD)'\
             The 'evaluation' predicate should not be negated, neither should the constant within the 'evaluation' predicate. Rather, the negation sentiment should be part of the constant, for example 'evaluation(NOT_GOOD)'\
-            Use negation when predicates express negation (except for the 'evalution'-predicate), such that 'do not/can not/will not <predicate>' translates to '¬<Predicate>(<variables>)'\
+            Use negation when predicates express negation (except for the 'evalution'-predicate), such that 'do/can/will not <predicate>' translates to '¬<Predicate>(<variables>)'\
             When 'you should' is stated, it implies a universally good evaluation ('evaluation(GOOD)').\
             When 'it's nice' is stated, it implies a consequence interpreted as 'evaluation(NICE)'.\
             'evaluation(NOT_GOOD)' is not the same as 'evaluation(BAD)'.\
             Make sure each action/property that has an actor is connected to its actor, e.g. 'someones things' translates to 'Thing(x) ∧ BelongsTo(x,y)'.\
-            It's better to divide the formula into several predicates that express separate parts than combining all information into a single predicate, e.g. 'Old(x) ∧ Man(x)' insted of 'OldMan(x)'.\
+            It's better to divide the formula into several predicates that express separate parts than combining all information into a single predicate, e.g. 'old man' translates to 'Man(x) ∧ Old(x)'.\
             Double check that all requirements specified above are met before giving your answer.\
             Try 'reading out loud' your translation to make sure the sentiment aligns with the English sentence before giving your answer. Adjust if sentiment does not align.\
             You get three examples that show correct translations and the wanted output format."},
@@ -482,12 +482,12 @@ def adjustment_prompt_10(sentence, formula):
             Don't negate variables or constants, e.g. (evaluation(¬GOOD)).\
             Each formula should be formulated as an implication, where the conclusion should always be an evaluation, for example 'evaluation(GOOD)'\
             The 'evaluation' predicate should not be negated, neither should the constant within the 'evaluation' predicate. Rather, the negation sentiment should be part of the constant, for example 'evaluation(NOT_GOOD)'\
-            Use negation when predicates express negation (except for 'evalution'-predicate), such that 'do not/can not/will not <predicate>' translates to '¬<Predicate>(<variables>)''\
+            Use negation when predicates express negation (except for 'evalution'-predicate), such that 'do/can/will not <predicate>' translates to '¬<Predicate>(<variables>)''\
             When 'you should' is stated, it implies a universally good evaluation ('evaluation(GOOD)').\
             When 'it's nice' is stated, it implies a consequence interpreted as 'evaluation(NICE)'.\
             'evaluation(NOT_GOOD)' is not the same as 'evaluation(BAD)'.\
-            Make sure each action/property that has an actor is connected to its actor,  e.g. 'someones things' translates to 'Thing(x) ∧ BelongsTo(x,y)'.\
-            It's better to divide the formula into several predicates that express separate parts than combining all information into a single predicate, e.g. 'Man(x) ∧ Old(x)' insted of 'OldMan(x)'.\
+            Make sure each action/property that has an actor is connected to its actor,  e.g. 'someone's things' translates to 'Thing(x) ∧ BelongsTo(x,y)'.\
+            It's better to divide the formula into several predicates that express separate parts than combining all information into a single predicate, e.g. 'old man' translates to 'Man(x) ∧ Old(x)'.\
             Double check that all requirements specified above are met before giving your answer.\
             Try 'reading out loud' your translation to make sure the sentiment aligns with the English sentence before giving your answer. Adjust if sentiment does not align.\
             You get three examples that show correct adjustment and the wanted output format."},
@@ -498,7 +498,59 @@ def adjustment_prompt_10(sentence, formula):
         {"role": "user", "content": "NL English sentence: you shouldn't drink someone's beer. Formula: ∀x∀y(People(x) ∧ Beer(y) ∧ Drink(x,y) → evaluation(BAD))"},
         {"role": "assistant", "content": "∀x∀y∀z(Beer(y) ∧ BelongsTo(y,x) ∧ Drink(z,y) → evaluation(BAD))"},
         
-        {"role": "user", "content": "NL English sentence: it's ok to not join in on fun activities.. Formula: ∀x∀y(Activity(x) ∧ Fun(x) ∧ NotJoinIn(y,x) → evaluation(NOT_OK))"},
+        {"role": "user", "content": "NL English sentence: it's ok to not join in on fun activities. Formula: ∀x∀y(Activity(x) ∧ Fun(x) ∧ NotJoinIn(y,x) → evaluation(NOT_OK))"},
+        {"role": "assistant", "content": "∀x∀y(Activity(x) ∧ Fun(x) ∧ ¬JoinIn(y,x) → evaluation(OK))"},
+        
+        {"role": "user", "content": f"NL English sentence: {sentence} Formula: {formula}"}]
+
+
+# Expansion of prompt 10. Remove and simplify instructions.
+def prompt_11(sentence):
+    return [
+        {"role":"system", "content": "You are a system tasked with translating sentences from natural language English to first-order logic formulas.\
+            Ensure precise and valid first-order formulas that convey the explicit sentiment of the original sentence as accurately as possible.\
+            Use the following symbols: '∨', '∧', '→', '↔', '∀', '∃', '¬', '(', ')', ','.\
+            Use variables in lowercase (e.g., 'x', 'y', 'z'), constants in uppercase (e.g., 'BAD', 'EMMA', 'FACEBOOK'), and predicates (e.g., 'People(x)', Friends(EMMA,y), Explains(x,y,z)).\
+            Ensure that the scope of a predicate does not contain other predicates or nested structures.\
+            Each formula should be formulated as an implication, where the conclusion should always be an evaluation, for example 'evaluation(GOOD)'\
+            The 'evaluation' predicate should not be negated, neither should the constant within the 'evaluation' predicate. Rather, the negation sentiment should be part of the constant, for example 'evaluation(NOT_GOOD)'\
+            'evaluation(NOT_GOOD)' is not the same as 'evaluation(BAD)'.\
+            You get three examples that show correct translations and the wanted output format."},
+        
+        {"role": "user", "content": "it's good to care about your family's history."},
+        {"role": "assistant", "content": "∀x∀y(FamilyHistory(x,y) ∧ Cares(x,y) → evaluation(GOOD))"},
+        
+        {"role": "user", "content": "you shouldn't talk to people about your fetishes."},
+        {"role": "assistant", "content": "∀x∀y∀z(Fetish(x) ∧ Has(y,x) ∧ People(z) ∧ TalkToAbout(y,z,x) → evaluation(BAD))"},
+        
+        {"role": "user", "content": "it's not ok to be frustrated when you work at the University of Bergen."},
+        {"role": "assistant", "content": "∀x(WorksAt(x, UNIVERSITY_OF_BERGEN) ∧ Frustrated(x) → evaluation(NOT_OK))"},
+        
+        {"role": "user", "content": f"{sentence}"}  
+    ] 
+    
+
+# Expansion of adjustment_prompt 9.
+def adjustment_prompt_11(sentence, formula):
+    return [
+        {"role":"system", "content": "You are a system tasked with adjusting a first-order formula to make sure it captures the sentiment expressed in the natural language sentence as accurately and complete as logically possible.\
+            You should ensure precise and valid first-order formulas that convey the explicit sentiment of the original sentence as accurately as possible.\
+            If the first-order formula does not need correction, your answer should be only the formula as is.\
+            Use the following symbols: '∨', '∧', '→', '↔', '∀', '∃', '¬', '(', ')', ','.\
+            Use variables in lowercase (e.g., 'x', 'y', 'z'), constants in uppercase (e.g., 'BAD', 'EMMA', 'FACEBOOK'), and predicates (e.g., 'People(x)', Friends(EMMA,y), Explains(x,y,z)).\
+            Ensure that the scope of a predicate does not contain other predicates or any nested structures.\
+            Each formula should be formulated as an implication, where the conclusion should always be an evaluation, for example 'evaluation(GOOD)'\
+            The 'evaluation' predicate should not be negated, neither should the constant within the 'evaluation' predicate. Rather, the negation sentiment should be part of the constant, for example 'evaluation(NOT_GOOD)'\
+            'evaluation(NOT_GOOD)' is not the same as 'evaluation(BAD)'.\
+            You get three examples that show correct adjustment and the wanted output format."},
+        
+        {"role": "user", "content": "NL English sentence: people are not expected to love their family. Formula: ∀x∀y((People(x) ∧ BelongsTo(x,Family(y)) ∧ ¬ExpectedToLove(x,y)) → evaluation(NOT_EXPECTED)"},
+        {"role": "assistant", "content": "∀x∀y(People(x) ∧ Family(x,y) ∧ Love(x,y) → evaluation(NOT_EXPECTED))"},
+        
+        {"role": "user", "content": "NL English sentence: you shouldn't drink someone's beer. Formula: ∀x∀y(People(x) ∧ Beer(y) ∧ Drink(x,y) → evaluation(BAD))"},
+        {"role": "assistant", "content": "∀x∀y∀z(Beer(y) ∧ BelongsTo(y,x) ∧ Drink(z,y) → evaluation(BAD))"},
+        
+        {"role": "user", "content": "NL English sentence: it's ok to not join in on fun activities. Formula: ∀x∀y(Activity(x) ∧ Fun(x) ∧ NotJoinIn(y,x) → evaluation(NOT_OK))"},
         {"role": "assistant", "content": "∀x∀y(Activity(x) ∧ Fun(x) ∧ ¬JoinIn(y,x) → evaluation(OK))"},
         
         {"role": "user", "content": f"NL English sentence: {sentence} Formula: {formula}"}]

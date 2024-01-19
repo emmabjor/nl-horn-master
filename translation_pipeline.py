@@ -38,7 +38,7 @@ def gpt_call(prompt):
     """
     response =  openai.chat.completions.create(
         model = "gpt-4",
-        temperature = 1.0,
+        temperature = 0.5,
         messages = prompt)
     return response.choices[0].message.content
 
@@ -483,10 +483,10 @@ def main():
     batchfile = 'data/batch_sentences.tsv' 
     #filename = 'data/test.tsv' # Testing 
     df_save = pd.read_csv(batchfile, sep='\t', header=0) # ------------- CHANGE FILENAME HERE -------------
-    prompt_function = prompts.prompt_10 # ------------- CHANGE PROMPT HERE -------------
-    prompt_iteration = "prompt_10" # ------------- CHANGE PROMPT_ITERATION HERE -------------
-    adjustment_function = prompts.adjustment_prompt_10 # ------------- CHANGE ADJUSTMENT HERE -------------
-    adjustment_iteration = "adjustment_prompt_10" # ------------- CHANGE ADJUSTMENT_ITERATION HERE -------------
+    prompt_function = prompts.prompt_11 # ------------- CHANGE PROMPT HERE -------------
+    prompt_iteration = "prompt_11" # ------------- CHANGE PROMPT_ITERATION HERE -------------
+    adjustment_function = prompts.adjustment_prompt_11 # ------------- CHANGE ADJUSTMENT HERE -------------
+    adjustment_iteration = "adjustment_prompt_11" # ------------- CHANGE ADJUSTMENT_ITERATION HERE -------------
     cnf_col_name = "cnf" 
     horn_col_name = "horn" 
     
