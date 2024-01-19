@@ -513,7 +513,8 @@ def prompt_11(sentence):
             Use variables in lowercase (e.g., 'x', 'y', 'z'), constants in uppercase (e.g., 'BAD', 'EMMA', 'FACEBOOK'), and predicates (e.g., 'People(x)', Friends(EMMA,y), Explains(x,y,z)).\
             Ensure that the scope of a predicate does not contain other predicates or nested structures.\
             Each formula should be formulated as an implication, where the conclusion should always be an evaluation, for example 'evaluation(GOOD)'\
-            The 'evaluation' predicate should not be negated, neither should the constant within the 'evaluation' predicate. Rather, the negation sentiment should be part of the constant, for example 'evaluation(NOT_GOOD)'\
+            'you should' implies a universally good evaluation ('evaluation(GOOD)') and 'you shouldn't' a bad evaluation ('evaluation(BAD)').\
+            When 'it's nice', 'it's not expected', etc. is stated, it implies a consequence interpreted as 'evaluation(NICE)', 'evaluation(NOT_EXPECTED)', etc.\
             'evaluation(NOT_GOOD)' is not the same as 'evaluation(BAD)'.\
             You get three examples that show correct translations and the wanted output format."},
         
@@ -540,7 +541,8 @@ def adjustment_prompt_11(sentence, formula):
             Use variables in lowercase (e.g., 'x', 'y', 'z'), constants in uppercase (e.g., 'BAD', 'EMMA', 'FACEBOOK'), and predicates (e.g., 'People(x)', Friends(EMMA,y), Explains(x,y,z)).\
             Ensure that the scope of a predicate does not contain other predicates or any nested structures.\
             Each formula should be formulated as an implication, where the conclusion should always be an evaluation, for example 'evaluation(GOOD)'\
-            The 'evaluation' predicate should not be negated, neither should the constant within the 'evaluation' predicate. Rather, the negation sentiment should be part of the constant, for example 'evaluation(NOT_GOOD)'\
+            'you should' implies a universally good evaluation ('evaluation(GOOD)') and 'you shouldn't' a bad evaluation ('evaluation(BAD)').\
+            When 'it's nice', 'it's not expected', etc. is stated, it implies a consequence interpreted as 'evaluation(NICE)', 'evaluation(NOT_EXPECTED)', etc.\
             'evaluation(NOT_GOOD)' is not the same as 'evaluation(BAD)'.\
             You get three examples that show correct adjustment and the wanted output format."},
         

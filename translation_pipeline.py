@@ -38,7 +38,7 @@ def gpt_call(prompt):
     """
     response =  openai.chat.completions.create(
         model = "gpt-4",
-        temperature = 0.5,
+        temperature = 0.8,
         messages = prompt)
     return response.choices[0].message.content
 
