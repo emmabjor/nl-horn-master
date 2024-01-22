@@ -447,11 +447,11 @@ def prompt_10(sentence):
             Don't negate variables or constants, e.g. (evaluation(¬GOOD)).\
             Each formula should be formulated as an implication, where the conclusion should always be an evaluation, for example 'evaluation(GOOD)'\
             The 'evaluation' predicate should not be negated, neither should the constant within the 'evaluation' predicate. Rather, the negation sentiment should be part of the constant, for example 'evaluation(NOT_GOOD)'\
-            Use negation when predicates express negation (except for the 'evalution'-predicate), such that 'do/can/will not <predicate>' translates to '¬<Predicate>(<variables>)'\
+            Use negation in the antecedent when predicates express negation, such that 'do/can/will not <predicate>' translates to '¬<Predicate>()'\
             When 'you should' is stated, it implies a universally good evaluation ('evaluation(GOOD)').\
             When 'it's nice' is stated, it implies a consequence interpreted as 'evaluation(NICE)'.\
             'evaluation(NOT_GOOD)' is not the same as 'evaluation(BAD)'.\
-            Make sure each action/property that has an actor is connected to its actor, e.g. 'someones things' translates to 'Thing(x) ∧ BelongsTo(x,y)'.\
+            Make sure each action/property that has an actor is connected to its actor, e.g. 'your things' translates to 'Thing(x) ∧ BelongsTo(x,y)', or 'your family' translates to 'FamilyOf(x,y)'.\
             It's better to divide the formula into several predicates that express separate parts than combining all information into a single predicate, e.g. 'old man' translates to 'Man(x) ∧ Old(x)'.\
             Double check that all requirements specified above are met before giving your answer.\
             Try 'reading out loud' your translation to make sure the sentiment aligns with the English sentence before giving your answer. Adjust if sentiment does not align.\
@@ -482,11 +482,11 @@ def adjustment_prompt_10(sentence, formula):
             Don't negate variables or constants, e.g. (evaluation(¬GOOD)).\
             Each formula should be formulated as an implication, where the conclusion should always be an evaluation, for example 'evaluation(GOOD)'\
             The 'evaluation' predicate should not be negated, neither should the constant within the 'evaluation' predicate. Rather, the negation sentiment should be part of the constant, for example 'evaluation(NOT_GOOD)'\
-            Use negation when predicates express negation (except for 'evalution'-predicate), such that 'do/can/will not <predicate>' translates to '¬<Predicate>(<variables>)''\
+            Use negation in the antecedent when predicates express negation, such that 'do/can/will not <predicate>' translates to '¬<Predicate>()''\
             When 'you should' is stated, it implies a universally good evaluation ('evaluation(GOOD)').\
             When 'it's nice' is stated, it implies a consequence interpreted as 'evaluation(NICE)'.\
             'evaluation(NOT_GOOD)' is not the same as 'evaluation(BAD)'.\
-            Make sure each action/property that has an actor is connected to its actor,  e.g. 'someone's things' translates to 'Thing(x) ∧ BelongsTo(x,y)'.\
+            Make sure each action/property that has an actor is connected to its actor,  e.g. 'someone's things' translates to 'Thing(x) ∧ BelongsTo(x,y)', or 'your family' translates to 'FamilyOf(x,y)'.\
             It's better to divide the formula into several predicates that express separate parts than combining all information into a single predicate, e.g. 'old man' translates to 'Man(x) ∧ Old(x)'.\
             Double check that all requirements specified above are met before giving your answer.\
             Try 'reading out loud' your translation to make sure the sentiment aligns with the English sentence before giving your answer. Adjust if sentiment does not align.\
