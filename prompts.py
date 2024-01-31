@@ -483,7 +483,7 @@ def adjustment_prompt_10_BEST(sentence, formula):
             Don't negate variables or constants, e.g. (evaluation(¬GOOD)).\
             Each formula should be formulated as an implication, where the conclusion should always be an evaluation, for example 'evaluation(GOOD)'\
             The 'evaluation' predicate should not be negated, neither should the constant within the 'evaluation' predicate. Rather, the negation sentiment should be part of the constant, for example 'evaluation(NOT_GOOD)'\
-            Use negation in the antecedent when predicates express negation, such that 'do/can/will not <predicate>' translates to '¬<Predicate>()''\
+            Use negation in the antecedent when predicates express negation, such that 'do/can/will not <predicate>' translates to '¬<Predicate>()'\
             When 'you should' is stated, it implies a universally good evaluation ('evaluation(GOOD)').\
             When 'it's nice' is stated, it implies a consequence interpreted as 'evaluation(NICE)'.\
             When 'others' or 'someone else' is mentioned, these should be represented with existential quantifier, such that 'other people' translates to '∃x(People(x)).\
