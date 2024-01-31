@@ -437,7 +437,7 @@ def adjustment_prompt_9(sentence, formula):
 #   Eats(Burgers(x))
 
 # Expansion of prompt 9. Changed examples and specified some instructions
-def prompt_10(sentence):
+def prompt_10_BEST(sentence):
     return [
         {"role":"system", "content": "You are a system tasked with translating sentences from natural language English to first-order logic formulas.\
             Ensure precise and valid first-order formulas that convey the explicit sentiment of the original sentence as accurately as possible.\
@@ -450,6 +450,7 @@ def prompt_10(sentence):
             Use negation in the antecedent when predicates express negation, such that 'do/can/will not <predicate>' translates to '¬<Predicate>()'\
             When 'you should' is stated, it implies a universally good evaluation ('evaluation(GOOD)').\
             When 'it's nice' is stated, it implies a consequence interpreted as 'evaluation(NICE)'.\
+            When 'others' or 'someone else' is mentioned, these should be represented with existential quantifier, such that 'other people' translates to '∃x(People(x)).\
             'evaluation(NOT_GOOD)' is not the same as 'evaluation(BAD)'.\
             Make sure each action/property that has an actor is connected to its actor, e.g. 'your things' translates to 'Thing(x) ∧ BelongsTo(x,y)', or 'your family' translates to 'FamilyOf(x,y)'.\
             It's better to divide the formula into several predicates that express separate parts than combining all information into a single predicate, e.g. 'old man' translates to 'Man(x) ∧ Old(x)'.\
@@ -460,8 +461,8 @@ def prompt_10(sentence):
         {"role": "user", "content": "it's good to care about your family's history."},
         {"role": "assistant", "content": "∀x∀y(FamilyHistory(x,y) ∧ Cares(x,y) → evaluation(GOOD))"},
         
-        {"role": "user", "content": "you shouldn't talk to people about your fetishes."},
-        {"role": "assistant", "content": "∀x∀y∀z(Fetish(x) ∧ Has(y,x) ∧ People(z) ∧ TalkToAbout(y,z,x) → evaluation(BAD))"},
+        {"role": "user", "content": "you shouldn't talk to other people about your fetishes."},
+        {"role": "assistant", "content": "∀x∀y∃z(Fetish(x) ∧ Has(y,x) ∧ People(z) ∧ TalkToAbout(y,z,x) → evaluation(BAD))"},
         
         {"role": "user", "content": "it's not ok to be frustrated when you work at the University of Bergen."},
         {"role": "assistant", "content": "∀x(WorksAt(x, UNIVERSITY_OF_BERGEN) ∧ Frustrated(x) → evaluation(NOT_OK))"},
@@ -471,9 +472,9 @@ def prompt_10(sentence):
     
 
 # Expansion of adjustment_prompt 9.
-def adjustment_prompt_10(sentence, formula):
+def adjustment_prompt_10_BEST(sentence, formula):
     return [
-        {"role":"system", "content": "You are a system tasked with adjusting a first-order formula to make sure it captures the sentiment expressed in the natural language sentence as accurately and complete as logically possible.\
+        {"role":"system", "content": "You are a system tasked with correcting a first-order formula to make sure it captures the sentiment expressed in the natural language sentence as accurately and complete as logically possible.\
             You should ensure precise and valid first-order formulas that convey the explicit sentiment of the original sentence as accurately as possible.\
             If the first-order formula does not need correction, your answer should be only the formula as is.\
             Use the following symbols: '∨', '∧', '→', '↔', '∀', '∃', '¬', '(', ')', ','.\
@@ -485,6 +486,7 @@ def adjustment_prompt_10(sentence, formula):
             Use negation in the antecedent when predicates express negation, such that 'do/can/will not <predicate>' translates to '¬<Predicate>()''\
             When 'you should' is stated, it implies a universally good evaluation ('evaluation(GOOD)').\
             When 'it's nice' is stated, it implies a consequence interpreted as 'evaluation(NICE)'.\
+            When 'others' or 'someone else' is mentioned, these should be represented with existential quantifier, such that 'other people' translates to '∃x(People(x)).\
             'evaluation(NOT_GOOD)' is not the same as 'evaluation(BAD)'.\
             Make sure each action/property that has an actor is connected to its actor,  e.g. 'someone's things' translates to 'Thing(x) ∧ BelongsTo(x,y)', or 'your family' translates to 'FamilyOf(x,y)'.\
             It's better to divide the formula into several predicates that express separate parts than combining all information into a single predicate, e.g. 'old man' translates to 'Man(x) ∧ Old(x)'.\
@@ -495,8 +497,8 @@ def adjustment_prompt_10(sentence, formula):
         {"role": "user", "content": "NL English sentence: people are not expected to love their family. Formula: ∀x∀y((People(x) ∧ BelongsTo(x,Family(y)) ∧ ¬ExpectedToLove(x,y)) → evaluation(NOT_EXPECTED)"},
         {"role": "assistant", "content": "∀x∀y(People(x) ∧ Family(x,y) ∧ Love(x,y) → evaluation(NOT_EXPECTED))"},
         
-        {"role": "user", "content": "NL English sentence: you shouldn't drink someone's beer. Formula: ∀x∀y(People(x) ∧ Beer(y) ∧ Drink(x,y) → evaluation(BAD))"},
-        {"role": "assistant", "content": "∀x∀y∀z(Beer(y) ∧ BelongsTo(y,x) ∧ Drink(z,y) → evaluation(BAD))"},
+        {"role": "user", "content": "NL English sentence: you shouldn't drink someone else's beer. Formula: ∀x∀y(People(x) ∧ Beer(y) ∧ Drink(x,y) → evaluation(BAD))"},
+        {"role": "assistant", "content": "∃x∀y∀z(Beer(y) ∧ BelongsTo(y,x) ∧ Drink(z,y) → evaluation(BAD))"},
         
         {"role": "user", "content": "NL English sentence: it's ok to not join in on fun activities. Formula: ∀x∀y(Activity(x) ∧ Fun(x) ∧ NotJoinIn(y,x) → evaluation(NOT_OK))"},
         {"role": "assistant", "content": "∀x∀y(Activity(x) ∧ Fun(x) ∧ ¬JoinIn(y,x) → evaluation(OK))"},
@@ -558,3 +560,74 @@ def adjustment_prompt_11(sentence, formula):
         {"role": "user", "content": f"NL English sentence: {sentence} Formula: {formula}"}]
 
 
+
+# Chain of Thought-prompting
+
+# Part 1: Identify predicates and moral evaluation
+def cot_1(sentence, prev=""):
+    return [
+        {"role":"system", "content": "You are a system tasked with identifying first-order predicates and moral evaluation in a sentence.\
+            You should identify all predicates in the sentence and write them down in the following format: 'Predicate(<var1>, <var2>, ...)'.\
+            Predicates are often verbs, adjectives, or nouns.\
+            Adjective- and noun-predicates usually take one argument, for example '_ is good' translates to 'Good(<val1>)', or 'person' translates to 'Person(<val1>)'.\
+            Most verb-predicates requre two arguments, for example '_ works at _' translates to WorksAt(<val1>, <val2>)'.\
+            Some verb-predicates requre three or more arguments, for example '_ wants _ to steal _' translates to 'WantsToSteal(<val1>, <val2>, <val3>)'.\
+            Each sentence will have a moral evaluation, which should be written as 'evaluation(<evaluation>)'.\
+            'you should' implies a universally good evaluation ('evaluation(GOOD)') and 'you shouldn't' a bad evaluation ('evaluation(BAD)').\
+            When 'it's nice', 'it's not expected', etc. is stated, it implies a consequence interpreted as 'evaluation(NICE)', 'evaluation(NOT_EXPECTED)', etc.\
+            You get three examples showing correct identification and the wanted output format."},
+        
+        {"role": "user", "content": "you shouldn't pry into your child's personal buisness."},
+        {"role": "assistant", "content": "evaluation(BAD), PryInto(<val1>, <val2>), ChildOf(<val1>, <val2>), PersonalBusinessOf(<val1>, <val2>)"},
+        
+        {"role": "user", "content": "people are not expected to love their family."},
+        {"role": "assistant", "content": "evaluation(NOT_EXPECTED), Love(<val1>, <val2>), People(<val1>), FamilyOf(<val1>, <val2>)"},
+        
+        {"role": "user", "content": "it's ok to not join in on fun activities in New York."},
+        {"role": "assistant", "content": "evaluation(OK), JoinIn(<val1>, <val2>), FunActivity(<val1>), In(val1, val2)"},
+        
+        {"role": "user", "content": f"{sentence}"}]
+
+# Part 2: Identify variables and quantifiers
+def cot_2(sentence, prev):
+    return [
+        {"role":"system", "content": "You are a system tasked with identifying first-order variables, constants and quantifiers for predicates in a sentence.\
+            You should fill in the <vals> in the provided predicates with the apprpriate variable, using 'x', 'y', 'z' in lowecase, or with the appropriate constant using for example 'EMMA', 'UNIVERSITYOFBERGEN', etc. in uppercase.\
+            Make sure the variables are consistent across predicates.\
+            For each variable, you need to identify the correct quantifier, which should be written as '∀<variable>' or '∃<variable>'.\
+            The 'evaluation'-predicate shall not be filled in.\
+            'you' and 'it' implies quantification 'everyone'.\
+            You get three examples showing correct identification and the wanted output format."},
+        
+        {"role": "user", "content": "Sentence: it's good to care about your family's history. Predicates: evaluation(BAD), PryInto(<val1>, <val2>), ChildOf(<val1>, <val2>), PersonalBusinessOf(<val1>, <val2>)"},
+        {"role": "assistant", "content": "∀x, ∀y, ∀z, evaluation(BAD), PryInto(x, y), ChildOf(y, x), PersonalBusinessOf(z, y)"},
+        
+        {"role": "user", "content": "Sentence: people are not expected to love their family. Predicates: evaluation(NOT_EXPECTED), Love(<val1>, <val2>), People(<val1>), FamilyOf(<val1>, <val2>)"},
+        {"role": "assistant", "content": "∀x, ∀y, evaluation(NOT_EXPECTED), Love(x, y), People(x), FamilyOf(y, x)"},
+        
+        {"role": "user", "content": "Sentence: it's ok to not join in on fun activities in New York. Predicates: evaluation(OK), JoinIn(<val1>, <val2>), FunActivity(<val1>), In(val1, val2)"},
+        {"role": "assistant", "content": "∀x, ∀y, evaluation(OK), JoinIn(x, y), FunActivity(y), In(y, NEWYORK)"},
+        
+        {"role": "user", "content": f"Sentence: {sentence} Predicates: {prev}"}]
+
+# Part 3: Formulate sentence as an implication
+def cot_3(sentence, prev):
+    return [
+        {"role":"system", "content": "You are a system tasked with constructing valid first-order sentences using the predicates, variables and quantifiers provided.\
+            You should ensure precise and valid first-order formulas that convey the explicit sentiment of the original sentence as accurately as possible.\
+            You should only use the predicates, variables and quantifiers provided.\
+            You should formulate each sentence as an implication, where the conclusion should always be the 'evaluation'-predicate.\
+            You should not use nested predicates.\
+            Use the following symbols: '∨', '∧', '→', '↔', '∀', '∃', '¬', '(', ')', ','.\
+            You get three examples showing correct identification and the wanted output format."},
+        
+        {"role": "user", "content": "Sentence: it's good to care about your family's history. Predicates: ∀x, ∀y, ∀z, evaluation(BAD), PryInto(x, y), ChildOf(y, x), PersonalBusinessOf(z, y)"},
+        {"role": "assistant", "content": "∀x∀y∀z(PryInto(y,z) ∧ ChildOf(x,y) ∧ PersonalBuisnessOf(z,x) → evaluation(BAD))"},
+        
+        {"role": "user", "content": "Sentence: people are not expected to love their family. Predicates:∀x, ∀y, evaluation(NOT_EXPECTED), Love(x, y), People(x), FamilyOf(y, x)"},
+        {"role": "assistant", "content": "∀x∀y(Love(x,y) ∧ People(x) ∧ FamilyOf(y,x) → evaluation(NOT_EXPECTED))"},
+        
+        {"role": "user", "content": "Sentence: it's ok to not join in on fun activities in New York. Predicates: ∀x, ∀y, evaluation(OK), JoinIn(x, y), FunActivity(y), In(y, NEWYORK)"},
+        {"role": "assistant", "content": "∀x∀y(¬JoinIn(x,y) ∧ FunActivity(y) ∧ In(y,NEWYORK) → evaluation(OK))"},
+        
+        {"role": "user", "content": f"Sentence: {sentence} Predicates: {prev}"}]

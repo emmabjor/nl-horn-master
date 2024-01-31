@@ -1,36 +1,25 @@
 num	input_sequence
-0	you should expect your friends to reveal everything about themselves to you.
-1	you should ask too much of your family.
-2	it's good to meet new people when you go shopping.
-3	it's good to be excited about getting your first paycheck.
-4	you're expected to make sure food you serve to others is safe to eat.
-5	it's bad to take an advantage in life when you see it.
-6	you shouldn't try to steal your friend's significant other
-7	you shouldn't measure new furniture before buying.
-8	it's bad to get free driving lessons if you want to learn how to drive.
-9	it's considered uncivilized to live in a van.
-10	people are not expected to love their family.
-100	it's good to take care and do nice things for yourself.
-101	it's okay to have doubts about your employers programs.
-102	it's fun to hire a tour guide to learn about new places.
-103	it's good to go out camping with your buddies.
-104	people should date others based solely on their age.
-105	you should sleep around if you don't want an std.
-106	you should not always get registration information when in an accident
-107	people should root for the success of their friends' relationships.
-108	getting circumcised isn't normal.
-109	it's not ok to be frustrated when you work on amazon mechanical turk.
-110	it's bad for your health scare to be averted.
-200	it is bad to support a friend staying quit from smoking.
-201	it's wrong to single someone out based on their race.
-202	you shouldn't get help if your anxiety is interfering with your daily life
-203	it is unexpected people will feel proud of their country.
-204	it's expected that you won't cut off family members.
-205	it's bad to show one's feelings for your partner.
-206	it is good to be the bigger person and not hold a grudge.
-207	it's not admirable when people are able to admit their mistakes.
-208	it's good to care about your family's history.
-209	it's bad to phrase something awkwardly.
-210	it's not okay to expect someone care about to be a perfect person.
+1000	it's bad to take an action that will knowingly harm others.
+1001	it is wrong to force others to talk about things they are uncomfortable with.
+1002	it is unreasonable that people join festivals for things they are interested in.
+1003	you should try to keep your kitchen clean.
+1004	it is not okay to be upset when you cannot afford luxuries.
+1005	if you're getting swept out to sea, you shouldn't yell for help .
+1006	it's not okay if you give in to the victimization cycle.
+1007	it's bad to call your boss to let them know if you'll be late.
+1008	it is not expected people will have another income if they quit their job.
+1009	you're discouraged from treating everyone with respect, even fat people.
+1010	it's unreasonable if you write a good recommendation letter for prepared students.
 
 
+1000	it's bad to take an action that will knowingly harm others.	∀x∀y∀z(Action(x) ∧ Takes(y,x) ∧ WillHarm(y,z) ∧ Knows(y,z) → evaluation(BAD))	1	∀x∀y∀z(Action(x) ∧ Takes(y,x) ∧ WillHarm(x,z) ∧ Knows(y,WillHarm(x,z)) → evaluation(BAD))	0	INVALID	-2	INVALID	-2
+1001	it is wrong to force others to talk about things they are uncomfortable with.	∀x∀y∀z(Force(x,y) ∧ TalkAbout(z) ∧ UncomfortableWith(y,z) → evaluation(WRONG))	1	∀x∀y∀z(People(x) ∧ ForceTalkAbout(x,y,z) ∧ Uncomfortable(y,z) → evaluation(WRONG))	1	evaluation(WRONG) | ~People(v0) | ~ForceTalkAbout(v0, v1, v2) | ~Uncomfortable(v1, v2)	1	(¬People(v0) ∨ ¬ForceTalkAbout(v0, v1, v2) ∨ ¬Uncomfortable(v1, v2) ∨ evaluation(WRONG))	1
+1002	it is unreasonable that people join festivals for things they are interested in.	∀x∀y∀z(People(x) ∧ Thing(y) ∧ InterestedIn(x,y) ∧ JoinsFestivalFor(x,z,y) → evaluation(UNREASONABLE))	1	∀x∀y∀z(People(x) ∧ Thing(z) ∧ InterestedIn(x,z) ∧ JoinFestivalFor(x,y,z) → evaluation(UNREASONABLE))	1	evaluation(UNREASONABLE) | ~People(v3) | ~Thing(v5) | ~InterestedIn(v3, v5) | ~JoinFestivalFor(v3, v4, v5)	1	(¬People(v3) ∨ ¬Thing(v5) ∨ ¬InterestedIn(v3, v5) ∨ ¬JoinFestivalFor(v3, v4, v5) ∨ evaluation(UNREASONABLE))	1
+1003	you should try to keep your kitchen clean.	∀x∀y(Kitchen(y) ∧ BelongsTo(x,y) ∧ TriesToKeepClean(x,y) → evaluation(GOOD))	1	∀x∀y(Kitchen(y) ∧ Owns(x,y) ∧ TriesToKeepClean(x,y) → evaluation(GOOD))	1	evaluation(GOOD) | ~Kitchen(v7) | ~Owns(v6, v7) | ~TriesToKeepClean(v6, v7)	1	(¬Kitchen(v7) ∨ ¬Owns(v6, v7) ∨ ¬TriesToKeepClean(v6, v7) ∨ evaluation(GOOD))	1
+1004	it is not okay to be upset when you cannot afford luxuries.	∀x(CannotAffordLuxuries(x) ∧ Upset(x) → evaluation(NOT_OK))	1	∀x(CannotAffordLuxuries(x) ∧ Upset(x) → evaluation(NOT_OK))	1	evaluation(NOT_OK) | ~CannotAffordLuxuries(v8) | ~Upset(v8)	1	(¬CannotAffordLuxuries(v8) ∨ ¬Upset(v8) ∨ evaluation(NOT_OK))	1
+1005	if you're getting swept out to sea, you shouldn't yell for help .	∀x∀y(Sea(x) ∧ GettingSweptOutTo(y, x) ∧ YellsForHelp(y) → evaluation(NOT_GOOD))	1	∀x(GettingSweptOutToSea(x) ∧ ¬YellsForHelp(x) → evaluation(NOT_GOOD))	1	evaluation(NOT_GOOD) | ~GettingSweptOutToSea(v9) | YellsForHelp(v9)	1	INVALID HORN	0
+1006	it's not okay if you give in to the victimization cycle.	∀x(VictimizationCycle(x) ∧ GiveInTo(x) → evaluation(NOT_OK))	1	∀x(VictimizationCycle(x) ∧ GiveInTo(YOU,x) → evaluation(NOT_OK))	1	evaluation(NOT_OK) | ~VictimizationCycle(v10) | ~GiveInTo(YOU, v10)	1	(¬VictimizationCycle(v10) ∨ ¬GiveInTo(YOU, v10) ∨ evaluation(NOT_OK))	1
+1007	it's bad to call your boss to let them know if you'll be late.	∀x∀y(WorksFor(x,y) ∧ Boss(y) ∧ CallsToNotifyLate(x,y) → evaluation(NOT_GOOD))	1	∀x∀y(WorksFor(x,y) ∧ Boss(y) ∧ CallToNotifyLate(x,y) → evaluation(BAD))	1	evaluation(BAD) | ~WorksFor(v11, v12) | ~Boss(v12) | ~CallToNotifyLate(v11, v12)	1	(¬WorksFor(v11, v12) ∨ ¬Boss(v12) ∨ ¬CallToNotifyLate(v11, v12) ∨ evaluation(BAD))	1
+1008	it is not expected people will have another income if they quit their job.	∀x∀y(People(x) ∧ Job(y) ∧ Quit(x,y) → ¬∃z(Income(z) ∧ Have(x,z)))	1	∀x∀y(People(x) ∧ Job(y) ∧ Quit(x,y) → evaluation(NOT_EXPECTED))	1	evaluation(NOT_EXPECTED) | ~People(v13) | ~Job(v14) | ~Quit(v13, v14)	1	(¬People(v13) ∨ ¬Job(v14) ∨ ¬Quit(v13, v14) ∨ evaluation(NOT_EXPECTED))	1
+1009	you're discouraged from treating everyone with respect, even fat people.	∀x∀y(Treats(x, y, RESPECT) ∧ (People(y) ∨ Fat(y)) → evaluation(NOT_GOOD))	1	∀x∀y((People(y) ∨ Fat(y)) ∧ Treats(x, y, RESPECT) → evaluation(DISCOURAGED))	1	~People(v16) | evaluation(DISCOURAGED) | ~Treats(v15, v16, RESPECT) & ~Fat(v16) | evaluation(DISCOURAGED) | ~Treats(v15, v16, RESPECT)	1	(¬People(v16) ∨ ¬Treats(v15, v16, RESPECT) ∨ evaluation(DISCOURAGED)) ∧ (¬Fat(v16) ∨ ¬Treats(v15, v16, RESPECT) ∨ evaluation(DISCOURAGED))	1
+1010	it's unreasonable if you write a good recommendation letter for prepared students.	∀x∀y(RecommendationLetter(x,y) ∧ Good(x) ∧ Prepared(y) → evaluation(UNREASONABLE))	1	∀x∀y((Student(y) ∧ Prepared(y) ∧ Letter(x) ∧ Good(x) ∧ Write(y,x)) → evaluation(NOT_UNREASONABLE))	1	evaluation(NOT_UNREASONABLE) | ~Student(v18) | ~Prepared(v18) | ~Letter(v17) | ~Good(v17) | ~Write(v18, v17)	1	(¬Student(v18) ∨ ¬Prepared(v18) ∨ ¬Letter(v17) ∨ ¬Good(v17) ∨ ¬Write(v18, v17) ∨ evaluation(NOT_UNREASONABLE))	1

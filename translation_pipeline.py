@@ -483,10 +483,10 @@ def main():
     batchfile = 'data/batch_sentences.tsv' 
     #filename = 'data/test.tsv' # Testing 
     df_save = pd.read_csv(batchfile, sep='\t', header=0) # ------------- CHANGE FILENAME HERE -------------
-    prompt_function = prompts.prompt_10 # ------------- CHANGE PROMPT HERE -------------
-    prompt_iteration = "prompt_10" # ------------- CHANGE PROMPT_ITERATION HERE -------------
-    adjustment_function = prompts.adjustment_prompt_10 # ------------- CHANGE ADJUSTMENT HERE -------------
-    adjustment_iteration = "adjustment_prompt_10" # ------------- CHANGE ADJUSTMENT_ITERATION HERE -------------
+    prompt_function = prompts.prompt_10_BEST # ------------- CHANGE PROMPT HERE -------------
+    prompt_iteration = "prompt_10_BEST" # ------------- CHANGE PROMPT_ITERATION HERE -------------
+    adjustment_function = prompts.adjustment_prompt_10_BEST # ------------- CHANGE ADJUSTMENT HERE -------------
+    adjustment_iteration = "adjustment_prompt_10_BEST" # ------------- CHANGE ADJUSTMENT_ITERATION HERE -------------
     cnf_col_name = "cnf" 
     horn_col_name = "horn" 
     
