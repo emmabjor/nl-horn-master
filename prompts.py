@@ -437,7 +437,7 @@ def adjustment_prompt_9(sentence, formula):
 #   Eats(Burgers(x))
 
 # Expansion of prompt 9. Changed examples and specified some instructions
-def prompt_10_BEST(sentence):
+def prompt_10(sentence):
     return [
         {"role":"system", "content": "You are a system tasked with translating sentences from natural language English to first-order logic formulas.\
             Ensure precise and valid first-order formulas that convey the explicit sentiment of the original sentence as accurately as possible.\
@@ -472,7 +472,7 @@ def prompt_10_BEST(sentence):
     
 
 # Expansion of adjustment_prompt 9.
-def adjustment_prompt_10_BEST(sentence, formula):
+def adjustment_prompt_10(sentence, formula):
     return [
         {"role":"system", "content": "You are a system tasked with correcting a first-order formula to make sure it captures the sentiment expressed in the natural language sentence as accurately and complete as logically possible.\
             You should ensure precise and valid first-order formulas that convey the explicit sentiment of the original sentence as accurately as possible.\
