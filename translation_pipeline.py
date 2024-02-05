@@ -43,22 +43,6 @@ def gpt_call(prompt):
     return response.choices[0].message.content
 
 
-def gpt_prompt_fine_tune(prompt):
-    response = client.chat.completions.create(
-        model="ft:gpt-3.5-turbo-0613:personal::8hxFsIZp", 
-        messages=prompt
-    )
-    return(response.choices[0].message.content)
-
-
-def gpt_adjustment_fine_tune(prompt):
-    response = client.chat.completions.create(
-        model="ft:gpt-3.5-turbo-0613:personal::8fluRAzK", 
-        messages=prompt
-    )
-    return(response.choices[0].message.content)
-
-
 
 ############################# FOL Validity #############################
 
@@ -129,7 +113,6 @@ def nl_to_fol(df, prompt_function):
             formulas.append(f"INVALID FOL ADJUSTMENT: {formula}")
             evals.append(0)
     return formulas, evals
-    # save_metadata(df, prompt_iteration)
 
 
 def nl_to_fol_adjustment(df, prompt_iteration, adjustment):
@@ -481,7 +464,6 @@ def main():
     
     filename = 'data/results.tsv' 
     batchfile = 'data/batch_sentences.tsv' 
-    #filename = 'data/test.tsv' # Testing 
     df_save = pd.read_csv(batchfile, sep='\t', header=0) # ------------- CHANGE FILENAME HERE -------------
     prompt_function = prompts.prompt_10_BEST # ------------- CHANGE PROMPT HERE -------------
     prompt_iteration = "prompt_10_BEST" # ------------- CHANGE PROMPT_ITERATION HERE -------------
@@ -524,12 +506,14 @@ def main():
     df_save = update_df(df_save, horn_col_name, horn_formulas, horn_evals)
     
     
+    #### Save data to file 'filename' ####
     try:
         save_values(df_save, filename)
-    except:
+    except: 
+        # If error in saving, save to backup file
         num = f"{str(randint(0,9))}" +f"{str(randint(0,9))}"+f"{str(randint(0,9))}"
         backup_file = 'data/gpt_data_'+num+'.tsv'
-        print("Error saving values. Data frame saved to file gpt_data_"+num+".tsv")
+        print("Error saving values. Data frame saved to file named:", backup_file)
         df_save.to_csv(backup_file, sep='\t', mode='w', index=False, header=True)
         
 
