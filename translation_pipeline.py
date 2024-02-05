@@ -126,7 +126,7 @@ def nl_to_fol(df, prompt_function):
             formulas.append(formula)
             evals.append(1)
         else:
-            formulas.append(formula)
+            formulas.append(f"INVALID FOL ADJUSTMENT: {formula}")
             evals.append(0)
     return formulas, evals
     # save_metadata(df, prompt_iteration)
@@ -155,7 +155,7 @@ def nl_to_fol_adjustment(df, prompt_iteration, adjustment):
             formulas.append(formula)
             evals.append(1)
         else:
-            formulas.append(formula)
+            formulas.append(f"INVALID FOL ADJUSTMENT: {formula}")
             evals.append(0)
     return (formulas, evals)
 
@@ -479,7 +479,7 @@ def main():
     
     # Reading the file with all translations (correct version)
     
-    filename = 'data/all_translations.tsv' 
+    filename = 'data/results.tsv' 
     batchfile = 'data/batch_sentences.tsv' 
     #filename = 'data/test.tsv' # Testing 
     df_save = pd.read_csv(batchfile, sep='\t', header=0) # ------------- CHANGE FILENAME HERE -------------
@@ -490,12 +490,12 @@ def main():
     cnf_col_name = "cnf" 
     horn_col_name = "horn" 
     
-    # #### Batch Handling ####
+    # # #### Batch Handling ####
     # df_format = pd.read_csv(filename, sep='\t', header=0, nrows=0)
     # df_save = pd.concat([df_format, df_save])
     
-    # Testing
-    # lst = [["(¬A(x) ∨ B(x)) ∧ C(x) ∧ (¬D(x) ∨ ¬E(x))", 1],
+    # # Testing
+    # lst = [["∀x∀y∃z(MarriageOf(x,y) ∧ Maintain(y,x) ∧ ¬PartOf(z,x) ∧ ¬Seek(y,z) → evaluation(GOOD))", 1],
     #        ["¬A(x) ∨ ¬B(x)", 1],
     #        ["INVALID", 0]]
     # df_save = pd.DataFrame(lst, columns=["prompt_5_adjustment_prompt_3-translations","prompt_5_adjustment_prompt_3-evals"])
@@ -504,28 +504,28 @@ def main():
     
     #### NL TO FOL ####
     fol_formulas, fol_evals = nl_to_fol(df_save, prompt_function) # ADD (OPTIONAL) FILEPATH HERE
-    print("FOL translations finished. Saving values...")
+    print("\nFOL translations finished.\n")
     df_save = update_df(df_save, prompt_iteration, fol_formulas, fol_evals)
     
     fol_adjustment_formulas, fol_adjustment_evals = nl_to_fol_adjustment(df_save, prompt_iteration, adjustment_function)
-    print("FOL adjustments finished. Saving values...")
+    print("\nFOL adjustments finished.\n")
     df_save = update_df(df_save, f'{prompt_iteration}_{adjustment_iteration}', fol_adjustment_formulas, fol_adjustment_evals)
             
         
     #### FOL TO CNF ####
     cnf_formulas, cnf_evals = fol_to_cnf(df_save, prompt_iteration, adjustment_iteration)
-    print("CNF convertion finished. Saving values...")
+    print("\nCNF convertion finished.\n")
     df_save = update_df(df_save, cnf_col_name, cnf_formulas, cnf_evals)
     
     
     #### CNF TO Horn ####
     horn_formulas, horn_evals = cnf_to_horn(df_save, cnf_col_name)
-    print("Horn conversion finished. Saving values...")
+    print("\nHorn conversion finished. Saving values...\n")
     df_save = update_df(df_save, horn_col_name, horn_formulas, horn_evals)
     
     
     try:
-        save_values(df_save, batchfile)
+        save_values(df_save, filename)
     except:
         num = f"{str(randint(0,9))}" +f"{str(randint(0,9))}"+f"{str(randint(0,9))}"
         backup_file = 'data/gpt_data_'+num+'.tsv'

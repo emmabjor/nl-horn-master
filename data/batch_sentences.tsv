@@ -1,3 +1,4 @@
 num	input_sequence
-1000	it's bad to take an action that will knowingly harm others.
-1000	it's bad to take an action that will knowingly harm others.	∀x∀y∃z(Action(x) ∧ Takes(y,x) ∧ WillHarm(x,z) ∧ Knows(y,z) → evaluation(BAD))	1	∀x∀y∀z(Action(x) ∧ Takes(y,x) ∧ WillHarm(x,z) ∧ Knows(y,z) → evaluation(BAD))	1	evaluation(BAD) | ~Action(v0) | ~Takes(v1, v0) | ~WillHarm(v0, v2) | ~Knows(v1, v2)	1	(¬Action(v0) ∨ ¬Takes(v1, v0) ∨ ¬WillHarm(v0, v2) ∨ ¬Knows(v1, v2) ∨ evaluation(BAD))	1
+4109	it is clever to hide that you know someone's secrets.
+4110	it's not ok to keep your rightful space in line.
+4200	it is comforting to ease your friends paranoia.
