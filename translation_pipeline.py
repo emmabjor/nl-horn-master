@@ -110,7 +110,7 @@ def nl_to_fol(df, prompt_function):
             formulas.append(formula)
             evals.append(1)
         else:
-            formulas.append(f"INVALID FOL ADJUSTMENT: {formula}")
+            formulas.append(f"INVALID FOL: {formula}")
             evals.append(0)
     return formulas, evals
 
@@ -460,7 +460,7 @@ def update_df(df_save, col_name, formulas, evals):
 
 def main():
     
-    # Reading the file with all translations (correct version)
+    # Defining files and prompts
     
     filename = 'data/results.tsv' 
     batchfile = 'data/batch_sentences.tsv' 
@@ -483,7 +483,8 @@ def main():
     # df_save = pd.DataFrame(lst, columns=["prompt_5_adjustment_prompt_3-translations","prompt_5_adjustment_prompt_3-evals"])
     # prompt_iteration = "prompt_5" # ------------- CHANGE PROMPT_ITERATION HERE -------------
     # adjustment_iteration = "adjustment_prompt_3" # ------------- CHANGE ADJUSTMENT_PROMPT_ITERATION HERE -------------
-    
+
+
     #### NL TO FOL ####
     fol_formulas, fol_evals = nl_to_fol(df_save, prompt_function) # ADD (OPTIONAL) FILEPATH HERE
     print("\nFOL translations finished.\n")
