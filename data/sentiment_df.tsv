@@ -271,7 +271,7 @@
 269	2500	it is not normal for kids to beg their parents for sweets.	∀x∀y∀z(Kid(x) ∧ ParentOf(y,x) ∧ Sweets(z) ∧ BegFor(x,y,z) → evaluation(BAD))	0	0	0
 270	2501	you should talk with your friend before you break it off.	∀x∀y(Friend(x,y) ∧ TalkToBeforeBreakingOf(x,y) → evaluation(GOOD))	1	1	1
 271	2502	it's expected that people will report wrongdoing to the proper authorities.	∀x∀y∀z(WrongDoings(x) ∧ People(y) ∧ ProperAuthority(z) ∧ ReportTo(y,x,z) → evaluation(GOOD))	1	1	1
-272	2503	it is reasonable to be unhappy even if you are making a lot of money.	∀x∀y∀z((MakeAlotOfMoney(x) ∨ NotMakeAlotOfMoney(x)) ∧ Unhappy(x) → evaluation(BAD))	0	1	1
+272	2503	it is reasonable to be unhappy even if you are making a lot of money.	∀x∀y∀z((MakeAlotOfMoney(x) ∨ ¬MakeAlotOfMoney(x)) ∧ Unhappy(x) → evaluation(GOOD))	1	1	1
 273	2504	it's irrational to not do someone a favor that's asking too much.	∀x∀y∀z(Favor(x) ∧ AsksTooMuch(x) ∧ ¬DoFor(y,x,z) → evaluation(BAD))	0	1	0
 274	2505	it's not okay if you stop caring about someone just because you have a better situation in life.	∀x∀y∀z(StopCaringAbout(x,y) ∧ BetterSituationInLife(z) ∧ Have(x,z) → evaluation(BAD))	0	0	0
 275	2506	if you're selling something you're expected to be fair.	∀x∀y(Selling(x,y) ∧ Fair(x) → evaluation(GOOD))	1	1	1
@@ -306,7 +306,7 @@
 304	2802	it's bad to take drugs that can harm your health.	∀x∀y∀z(HealthOf(x,y) ∧ Drugs(z) ∧ CanHarm(z,x) ∧ Take(y,z) → evaluation(BAD))	0	0	0
 305	2803	it's discouraged to take a good thing and over do it.	∀x∀y(Thing(x) ∧ Good(x) ∧ Take(y,x) ∧ OverDo(y,x) → evaluation(BAD))	0	0	0
 306	2804	it's good to welcome your children into your home with love.	∀x∀y∀z(ChildOf(x,y) ∧ HomeOf(z,y) ∧ WelcomeIntoWith(y,x,z,LOVE) → evaluation(GOOD))	1	1	1
-307	2805	it's not rude to intentionally make someone mad	∀x∀y(IntentionallyMakeMad(x,y) → evaluation(BAD))	0	1	1
+307	2805	it's not rude to intentionally make someone mad	∀x∀y(IntentionallyMakeMad(x,y) → evaluation(GOOD))	1	1	1
 308	2806	it's ok to have a treat every once in awhile.	∃x∃y(Treat(x) ∧ Have(y,x) → evaluation(GOOD))	1	1	1
 309	2807	it is bad to try and pretend to be someone you're not	∀x∃y(PretendsToBe(x,y) → evaluation(BAD))	0	0	0
 310	2808	you should maintain your marriage so you don't seek someone else.	∀x∀y∃z(MarriageOf(x,y) ∧ Maintain(y,x) ∧ ¬PartOf(z,x) ∧ ¬Seek(y,z) → evaluation(GOOD))	1	1	1
@@ -992,3 +992,12 @@
 990	9108	it's not okay for girls to date each other.	∀x∀y(Girl(x) ∧ Girl(y) ∧ Date(x,y) → evaluation(BAD))	0	0	0
 991	9109	you have to be faithful to a partner if you don't feel like it.	∀x∀y(Partner(x) ∧ BeFaithfulTo(y,x) ∧ ¬FeelLikeBeingFaithfulTo(y,x) →evaluation(GOOD))	1	0	1
 992	9110	it's not ok to leave some chores for the people you live with to do.	∀x∀y∀z(LiveWith(x,y) ∧ People(y) ∧ Chore(z) ∧ LeaveForToDo(x,z,y) → evaluation(BAD))	0	0	0
+993	9200	it is wrong to make a joke of sexual orientation.	∀x∀y(SexualOrientation(x) ∧ MakeJokeOf(y,x) → evaluation(BAD))	0	0	0
+994	9201	it is rude to invade another person's personal space.	∀x∀y∃z(PersonalSpace(y,z) ∧ Invade(x,y) → evaluation(BAD))	0	0	0
+995	9202	it's bad to have a well-paying job and be successful.	∀x∀y(Job(x) ∧ WellPaid(x) ∧ Have(y,x) ∧ Sucessful(y) → evaluation(BAD))	0	1	0
+996	9204	it is okay to feel like you have to be a part of multiple communities.	∀x∃y∃z(Community(y) ∧ Community(z) ∧ FeelLikeHaveToBePartOf(x,y) ∧ FeelLikeHaveToBePartOf(x,z) → evaluation(GOOD))	1	1	1
+997	9205	boyfriends are not expected to show support to their girlfriends when they are having a rough time.	∀x∀y(BoyfriendOf(x,y) ∧ GirlfriendOf(y,x) ∧ HaveRoughTime(x) ∧ ShowSupport(x,y) → evaluation(BAD))	0	0	0
+998	9206	it's uncommon to think you're smarter than everyone on the internet.	∀x∀y(OnInternet(x) ∧ ThinkIsSmarterThan(y,y,x) → evaluation(BAD))	0	0	0
+999	9208	it is okay to pursue the things you love.	∀x∀y(Thing(x) ∧ Love(y,x) ∧ Pursue(y,x) → evaluation(GOOD))	1	1	1
+1000	9209	it's polite to tell someone to regulate their sadness.	∀x∀y(BelongsTo(SADNESS,x) ∧ TellToRegulate(y,x,SADNESS) → evaluation(GOOD))	1	1	1
+1001	9210	it's not exemplary when a company caters to people with disabilities.	∀x∀y(People(x) ∧ Disabled(x) ∧ Company(y) ∧ CatersTo(y,x) → evaluation(BAD))	0	1	0

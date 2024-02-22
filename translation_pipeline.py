@@ -1,3 +1,6 @@
+from juliacall import Main as jl
+jl.include("/Users/emmabjorkas/Documents/Informasjonsvitenskap/Master/gpt_pipeline/First-order-Logic-resolution-master/hw2.jl")
+
 import os
 import openai 
 import pandas as pd
@@ -13,8 +16,6 @@ openai.api_key = os.getenv("OPENAI_API_KEY")
 from openai import OpenAI
 client = OpenAI()
 
-from juliacall import Main as jl
-jl.include("/Users/emmabjorkas/Documents/Informasjonsvitenskap/Master/gpt_pipeline/First-order-Logic-resolution-master/hw2.jl")
 
 """
 Eval codes:
