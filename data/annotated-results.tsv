@@ -588,7 +588,7 @@ num	input_sequence	fol_translation	fol_adjustment-translation	fol_adjustment-eva
 5403	it is unreasonable that people will celebrate baby showers with friends.	∀x∀y(BabyShower(x) ∧ FriendsOf(y,z) ∧ People(z) ∧ CelebrateWith(z,x,y) → evaluation(BAD))	∀x∀y∀z(People(x) ∧ Friends(y) ∧ BabyShower(z) ∧ CelebrateWith(x,z,y) → evaluation(GOOD))	3				∀∃∧→¬∨	
 5404	it's wrong to want to induce labor when you're sick of being pregnant.	∀x(SickOfBeingPregnant(x) ∧ WantToInduceLabor(x) → evaluation(BAD))	∀x∀y(Pregnant(x) ∧ SickOfBeingPregnant(x,y) ∧ WantInduceLabor(x) → evaluation(BAD))	2				∀∃∧→¬∨	
 5405	it's not normal to hate your roommates	∀x∀y(RoomateOf(x,y) ∧ Hate(y,x) → evaluation(BAD))	∀x∀y(RoommateOf(y,x) ∧ Hates(x,y) → evaluation(BAD))	3				∀∃∧→¬∨	
-5406	if you feel sad, you should not get some help .	∀x(FeelSad(x) ∧ GetHelp(x) → evaluation(BAD))	∀x(Feels(x, SAD) ∧ ¬∃y(GetsHelp(x,y)) → evaluation(GOOD))					∀∃∧→¬∨	
+5406	if you feel sad, you should not get some help .	∀x(FeelSad(x) ∧ GetHelp(x) → evaluation(BAD))	∀x(Feels(x, SAD) ∧ ¬∃y(GetsHelp(x,y)) → evaluation(GOOD))	1				∀∃∧→¬∨	
 5407	it is bad to enjoy time with your dad.	∀x∀y∀z(DadOf(x,y) ∧ Time(z) ∧ EnjoyWith(x,z,y) → evaluation(BAD))	∀x∀y(DadOf(y,x) ∧ EnjoysTimeWith(x,y) → evaluation(GOOD))	3				∀∃∧→¬∨	
 5408	it's wrong to struggle and need help from others.	∀x∃y(Struggle(x) ∧ NeedHelpFrom(x,y) → evaluation(BAD))	∀x∃y(Struggles(x) ∧ People(y) ∧ NeedHelpFrom(x, y) → evaluation(BAD))	3				∀∃∧→¬∨	
 5409	it's wrong to have any hobby you like.	∀x∀y(Hobby(x) ∧ Like(y,x) ∧ Have(y,x) → evaluation(BAD))	∀x∀y(Hobby(x) ∧ Likes(y,x) → evaluation(BAD))	1				∀∃∧→¬∨	
