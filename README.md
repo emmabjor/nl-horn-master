@@ -16,3 +16,7 @@ Manually encoded norms from the NL norm dataset and evaluation of faithfulness o
 Clingo program with all valid Horn clauses represented as ASP facts and norms can be found in `results/horn_inconsistency_checker.lp`.
 
 Code for creating the Clingo program and performing sentiment analysis of the evaluation constants.
+
+The code in the `First-order-Logic-resolution-master` is copied from this repository: https://github.com/wjdanalharthi/First-order-Logic-resolution
+
+The `fol_parser.py` file is copied from this repository: https://github.com/gblackout/LogicLLaMA
