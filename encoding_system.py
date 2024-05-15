@@ -1,5 +1,5 @@
 from juliacall import Main as jl
-jl.include("/Users/emmabjorkas/Documents/Informasjonsvitenskap/Master/gpt_pipeline/First-order-Logic-resolution-master/hw2.jl")
+jl.include("/Users/emmabjorkas/Documents/Informasjonsvitenskap/Master/gpt_pipeline/First-order-Logic-resolution-master/hw2.jl") # Edit path: "path_to_folder/First-order-Logic-resolution-master/hw2.jl"
 
 import os
 import openai 
