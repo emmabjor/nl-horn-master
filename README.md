@@ -3,7 +3,10 @@
 **Encoding system:**
 A system that use GPT-4 to encode natural language norms to first-order Horn clauses.
 
-Clone this repo and install necessary requirements specified in `requirements-txt`. 
+Use Python 3.8.19
+
+Clone this repo and install necessary requirements specified in `requirements-txt`: pip install -r requirements.txt
+
 Add index and norms to the `data/batch_sentences.tsv` file. These are the norm sentences that will be encoede to Horn clause representations.
 Create a .env file with personal OpenAI API key.
 Edit second line in `encoding_system.py`to local path.
