@@ -1,11 +1,11 @@
 # Automatic encoding from natural language to Horn clauses
 
 **Encoding system:**
-A system that use GPT-4 to encode natural language norms to first-order Horn clauses.
+A system that use GPT-4 to encode natural language norms to first-order Horn clauses. Prompts can be found and edited in the file [promtps.py](prompts.py). Additionally, the code includes functionality to write all Horn clauses to a clingo script [results.horn_inconsistency_checker.lp](results.horn_inconsistency_checker.lp). 
 
 Use Python 3.8.19
 
-1. Clone this repo and install necessary requirements specified in [requirements.txt](requirements-txt): `pip install -r requirements.txt`
+1. Clone this repo and install necessary requirements specified in [requirements.txt](requirements.txt): `pip install -r requirements.txt`
 2. Add your personal OpenAI API key in the [.env](.env) file.
 
 3. Add index and norms to the [data/batch_sentences.tsv](data/batch_sentences.tsv) file. This file currently contains two examples. These are the norm sentences that will be encoede to Horn clause representations.
