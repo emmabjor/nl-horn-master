@@ -1,7 +1,7 @@
 # Automatic encoding from natural language to Horn clauses
 
 **Encoding system:**
-A system that use GPT-4 to encode natural language norms to first-order Horn clauses. Prompts can be found and edited in the file [promtps.py](prompts.py). Additionally, the code includes functionality to write all Horn clauses to a clingo script [results.horn_inconsistency_checker.lp](results.horn_inconsistency_checker.lp). 
+A system that use GPT-4 to encode natural language norms to first-order Horn clauses. Prompts can be found and edited in the file [promtps.py](prompts.py). The code includes functionality to write all Horn clauses to a clingo script found in file [results.horn_inconsistency_checker.lp](results.horn_inconsistency_checker.lp). Additionally, the file includes functionality for using a sentiment analysis model able to predict the evaluation constant for the norms.
 
 Use Python 3.8.19
 
