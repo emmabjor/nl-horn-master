@@ -4,7 +4,6 @@
 A system that use GPT-4 to encode natural language norms to first-order Horn clauses. Prompts can be found and edited in the file [promtps.py](prompts.py). The code includes functionality to write all Horn clauses to a clingo script found in file [results.horn_inconsistency_checker.lp](results.horn_inconsistency_checker.lp). Additionally, the file includes functionality for using a sentiment analysis model able to predict the evaluation constant for the norms. The sentiment analysis is trained using the [sentiment_analysis_labeled.tsv](sentiment_analysis_labeled.tsv) examples.
 
 We have made the following delimitations to the encodings:
-----------------------------------------------------------
 - Each encoding should be an implication where the antecedent represents the situation as a conjunction of predicates and the consequent should represent the moral judgment of the situation using a predicate evaluation, with the moral judgment as a constant, such as evaluation(GOOD) or evaluation(BAD).
 - Positive moral judgements should be encoded with the consequent evaluation(GOOD), while negative moral judgements should be encoded with the consequent evaluation(BAD).
 - Each NL norm that expresses the evaluation part using the phrases “you should” or “you should not” should be interpreted respectively as “it’s good to” or “it’s bad to”.
