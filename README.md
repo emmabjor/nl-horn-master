@@ -21,7 +21,7 @@ Use Python 3.8.19
 3. Edit second line in [encoding_system.py](encoding_system.py) to local path.
 4. Run [encoding_system.py](encoding_system.py). Results will be saved to [data/results.tsv](data/results.tsv).
 
-Manually encoded norms from the NL norm dataset and evaluation of faithfulness of the automatically encoded FOLs can be found in [results/annotated-encodings.tsv](results/annotated-encodings.tsv).
+Manually encoded norms from the NL norm dataset and evaluation of faithfulness of the automatically encoded FOLs can be found in [results/annotated-encodings.tsv](results/annotated-encodings.tsv). The column `automated_fol_encoding-eval` contains the manaul faithfulness evaluation of each encoded norm. 0: Syntactically invalid encoding, 1: Wrong encoding, 2: Lacking encoding, 3: Accurate encoding.
 
 Clingo program with all valid Horn clauses represented as ASP facts and norms can be found in [results/horn_inconsistency_checker.lp](results/horn_inconsistency_checker.lp).
 
