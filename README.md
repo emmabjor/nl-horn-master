@@ -29,6 +29,16 @@ Results from running norms from the NL norm dataset can be found in [results/enc
 
 Code for creating the Clingo program and performing sentiment analysis of the evaluation constants is found in [solver_and_sa.ipynb](solver_and_sa.ipynb).
 
-The code in the [First-order-Logic-resolution-master](First-order-Logic-resolution-master) is copied from this repository: https://github.com/wjdanalharthi/First-order-Logic-resolution
+The code in the [First-order-Logic-resolution-master](First-order-Logic-resolution-master) is copied from this repository: https://github.com/wjdanalharthi/First-order-Logic-resolution (Alharthi, 2019).
 
-The [fol_parser.py](fol_parser.py) file is copied from this repository: https://github.com/gblackout/LogicLLaMA
+The [fol_parser.py](fol_parser.py) file is copied from this repository: https://github.com/gblackout/LogicLLaMA (Yang, 2023).
+
+
+
+Wjdan Alharthi. First-order logic resolution. https://github.com/wjdanalharthi/F
+irst-order-Logic-resolution, 2019. Accessed January 2024
+
+Yuan Yang, Siheng Xiong, Ali Payani, Ehsan Shareghi, and Faramarz Fekri. Harnessing
+the power of large language models for natural language to first-order logic translation,
+2023.
+
