@@ -27,7 +27,7 @@
 :- rule(good,(-wantstolearn(V19, drive), -freedrivinglesson(V20), -gets(V19, V20))), rule(bad,(-wantstolearn(W19, drive), -freedrivinglesson(W20), -gets(W19, W20))).
 
 % (¬LivesIn(v21, VAN) ∨ evaluation(BAD))
-1{rule(bad,(-livesin(v21, van),))}1.
+1{rule(bad,(-livesin(v21, van)))}1.
 :- rule(good,(-livesin(V21, van))), rule(bad,(-livesin(W21, van))).
 
 % (¬FamilyOf(v23, v22) ∨ ¬Loves(v22, v23) ∨ evaluation(GOOD))
@@ -167,7 +167,7 @@
 :- rule(good,(-report(V105, f8(V105)), -shoplifting(f8(V105)))), rule(bad,(-report(W105, f8(W105)), -shoplifting(f8(W105)))).
 
 % (¬Enjoys(v106, ORAL_SEX) ∨ evaluation(GOOD))
-1{rule(good,(-enjoys(v106, oral_sex),))}1.
+1{rule(good,(-enjoys(v106, oral_sex)))}1.
 :- rule(good,(-enjoys(V106, oral_sex))), rule(bad,(-enjoys(W106, oral_sex))).
 
 % (¬Applicant(v107) ∨ ¬Past(v108, v107) ∨ ¬WearyAbout(v109, v108) ∨ evaluation(GOOD))
@@ -223,7 +223,7 @@
 :- rule(good,(-friends(V139, V140), -beingabused(V140), -holdagainst(V139, V140))), rule(bad,(-friends(W139, W140), -beingabused(W140), -holdagainst(W139, W140))).
 
 % (¬BreaksWind(v141) ∨ evaluation(GOOD))
-1{rule(good,(-breakswind(v141),))}1.
+1{rule(good,(-breakswind(v141)))}1.
 :- rule(good,(-breakswind(V141))), rule(bad,(-breakswind(W141))).
 
 % (¬Friend(v142, v143) ∨ ¬SetSurprisePartyFor(v143, v142) ∨ evaluation(BAD))
@@ -359,7 +359,7 @@
 :- rule(good,(-gettingsweptouttosea(V29, V30), -yellforhelp(V29))), rule(bad,(-gettingsweptouttosea(W29, W30), -yellforhelp(W29))).
 
 % (¬GivesInTo(v31, VICTIMIZATION_CYCLE) ∨ evaluation(BAD))
-1{rule(bad,(-givesinto(v31, victimization_cycle),))}1.
+1{rule(bad,(-givesinto(v31, victimization_cycle)))}1.
 :- rule(good,(-givesinto(V31, victimization_cycle))), rule(bad,(-givesinto(W31, victimization_cycle))).
 
 % (¬BossOf(v33, v32) ∨ ¬CallsToInformOfLatness(v32, v33, v34) ∨ evaluation(BAD))
@@ -559,7 +559,7 @@
 :- rule(good,(-sick(V182), -wantsspace(V182))), rule(bad,(-sick(W182), -wantsspace(W182))).
 
 % (¬DisrespectfulOfReligion(v183, v184) ∨ evaluation(BAD))
-1{rule(bad,(-disrespectfulofreligion(v183, v184),))}1.
+1{rule(bad,(-disrespectfulofreligion(v183, v184)))}1.
 :- rule(good,(-disrespectfulofreligion(V183, V184))), rule(bad,(-disrespectfulofreligion(W183, W184))).
 
 % (¬Parent(v185) ∨ ¬Child(v186) ∨ ¬UsesBabyTalk(v185, v186) ∨ evaluation(GOOD))
@@ -659,7 +659,7 @@
 :- rule(good,(-people(V31), -people(V32), -different(V31, V32), -tellwhattodo(V31, V32))), rule(bad,(-people(W31), -people(W32), -different(W31, W32), -tellwhattodo(W31, W32))).
 
 % (¬WantsThingsToBeRight(v34) ∨ evaluation(GOOD))
-1{rule(good,(-wantsthingstoberight(v34),))}1.
+1{rule(good,(-wantsthingstoberight(v34)))}1.
 :- rule(good,(-wantsthingstoberight(V34))), rule(bad,(-wantsthingstoberight(W34))).
 
 % (¬Scar(v36) ∨ ¬ResultOf(v36, SURGERY) ∨ ¬FeelsDownAbout(v35, v36) ∨ evaluation(GOOD))
@@ -667,7 +667,7 @@
 :- rule(good,(-scar(V36), -resultof(V36, surgery), -feelsdownabout(V35, V36))), rule(bad,(-scar(W36), -resultof(W36, surgery), -feelsdownabout(W35, W36))).
 
 % (¬Demands(v39, v40, GO_AWAY) ∨ evaluation(BAD))
-1{rule(bad,(-demands(v39, v40, go_away),))}1.
+1{rule(bad,(-demands(v39, v40, go_away)))}1.
 :- rule(good,(-demands(V39, V40, go_away))), rule(bad,(-demands(W39, W40, go_away))).
 
 % (¬Coworkers(v41, v42) ∨ ¬RespectfulOf(v42, v41) ∨ evaluation(GOOD))
@@ -815,7 +815,7 @@
 :- rule(good,(-people(V138), -closeto(V137, V138), -activity(V139), -excludes(V137, V138, V139))), rule(bad,(-people(W138), -closeto(W137, W138), -activity(W139), -excludes(W137, W138, W139))).
 
 % (¬Wants(v140, BREAK_FROM_LIFE) ∨ evaluation(GOOD))
-1{rule(good,(-wants(v140, break_from_life),))}1.
+1{rule(good,(-wants(v140, break_from_life)))}1.
 :- rule(good,(-wants(V140, break_from_life))), rule(bad,(-wants(W140, break_from_life))).
 
 % (¬BeCareful(v141, v142) ∨ ¬Driving(v141) ∨ ¬Motorcyclist(v142) ∨ evaluation(GOOD))
@@ -899,7 +899,7 @@
 :- rule(good,(-exof(V191, V192), -gettingmarried(V192), -feelsrelieved(V191))), rule(bad,(-exof(W191, W192), -gettingmarried(W192), -feelsrelieved(W191))).
 
 % (¬SticksUpForSelf(v193) ∨ evaluation(BAD))
-1{rule(bad,(-sticksupforself(v193),))}1.
+1{rule(bad,(-sticksupforself(v193)))}1.
 :- rule(good,(-sticksupforself(V193))), rule(bad,(-sticksupforself(W193))).
 
 % (¬Talking(v194) ∨ ¬TakesTime(v194) ∨ evaluation(GOOD))
@@ -939,7 +939,7 @@
 :- rule(good,(-homeof(V19, V21), -childrenof(V20, V19), -welcomeswithlove(V21, V20))), rule(bad,(-homeof(W19, W21), -childrenof(W20, W19), -welcomeswithlove(W21, W20))).
 
 % (¬MakesMad(v22, v23, INTENTIONAL) ∨ evaluation(GOOD))
-1{rule(good,(-makesmad(v22, v23, intentional),))}1.
+1{rule(good,(-makesmad(v22, v23, intentional)))}1.
 :- rule(good,(-makesmad(V22, V23, intentional))), rule(bad,(-makesmad(W22, W23, intentional))).
 
 % (¬Treat(f0(v24)) ∨ ¬Has(v24, f0(v24)) ∨ evaluation(GOOD))
@@ -947,7 +947,7 @@
 :- rule(good,(-treat(f0(V24)), -has(V24, f0(V24)))), rule(bad,(-treat(f0(W24)), -has(W24, f0(W24)))).
 
 % (¬PretendToBeDifferentPerson(v25) ∨ evaluation(BAD))
-1{rule(bad,(-pretendtobedifferentperson(v25),))}1.
+1{rule(bad,(-pretendtobedifferentperson(v25)))}1.
 :- rule(good,(-pretendtobedifferentperson(V25))), rule(bad,(-pretendtobedifferentperson(W25))).
 
 % (¬Important(v28) ∨ ¬HealthInformation(v28) ∨ ¬FamilyOf(v29, v30) ∨ ¬KeepsFrom(v30, v28) ∨ evaluation(BAD))
@@ -999,7 +999,7 @@
 :- rule(good,(-serviceworker(V62), -treatwell(V61, V62))), rule(bad,(-serviceworker(W62), -treatwell(W61, W62))).
 
 % (¬IsSkepticalAbout(v63, v64) ∨ evaluation(GOOD))
-1{rule(good,(-isskepticalabout(v63, v64),))}1.
+1{rule(good,(-isskepticalabout(v63, v64)))}1.
 :- rule(good,(-isskepticalabout(V63, V64))), rule(bad,(-isskepticalabout(W63, W64))).
 
 % (¬OverExercise(v67) ∨ ¬MightTireOut(v67) ∨ ¬MightQuitPrematurely(v67) ∨ evaluation(BAD))
@@ -1079,7 +1079,7 @@
 :- rule(good,(-people(V109), -healthy(V110), -seekout(V109, V110))), rule(bad,(-people(W109), -healthy(W110), -seekout(W109, W110))).
 
 % (¬ApologizeFor(v111, v112) ∨ evaluation(GOOD))
-1{rule(good,(-apologizefor(v111, v112),))}1.
+1{rule(good,(-apologizefor(v111, v112)))}1.
 :- rule(good,(-apologizefor(V111, V112))), rule(bad,(-apologizefor(W111, W112))).
 
 % (¬MixedCompany(v114) ∨ ¬DiscussesIncomeIn(v113, v114) ∨ evaluation(BAD))
@@ -1215,7 +1215,7 @@
 :- rule(good,(-guest(V205), -afterawhile(V204, V205), -tiredof(V204, V205))), rule(bad,(-guest(W205), -afterawhile(W204, W205), -tiredof(W204, W205))).
 
 % (¬Takes(v206, SLEEPING_MEDICATION) ∨ evaluation(BAD))
-1{rule(bad,(-takes(v206, sleeping_medication),))}1.
+1{rule(bad,(-takes(v206, sleeping_medication)))}1.
 :- rule(good,(-takes(V206, sleeping_medication))), rule(bad,(-takes(W206, sleeping_medication))).
 
 % (¬EndsFriendshipWith(v0, v1) ∨ ¬HasBusinessWith(v0, v1) ∨ evaluation(BAD))
@@ -1447,7 +1447,7 @@
 :- rule(good,(-harassed(V132), -goto(V132, police))), rule(bad,(-harassed(W132), -goto(W132, police))).
 
 % (¬AskToStayOver(v133, v134) ∨ evaluation(GOOD))
-1{rule(good,(-asktostayover(v133, v134),))}1.
+1{rule(good,(-asktostayover(v133, v134)))}1.
 :- rule(good,(-asktostayover(V133, V134))), rule(bad,(-asktostayover(W133, W134))).
 
 % (¬CultureOf(v136, f5(v135,v136)) ∨ ¬People(f5(v135,v136)) ∨ ¬Respects(v135, v136) ∨ evaluation(GOOD))
@@ -1523,7 +1523,7 @@
 :- rule(good,(-uptobat(V184), -ball(V185), -hits(V184, V185))), rule(bad,(-uptobat(W184), -ball(W185), -hits(W184, W185))).
 
 % (¬UsesProperGrammar(v186) ∨ evaluation(GOOD))
-1{rule(good,(-usespropergrammar(v186),))}1.
+1{rule(good,(-usespropergrammar(v186)))}1.
 :- rule(good,(-usespropergrammar(V186))), rule(bad,(-usespropergrammar(W186))).
 
 % (¬GoodThings(v188) ∨ ¬WantsFor(v187, v188) ∨ evaluation(GOOD))
@@ -1663,7 +1663,7 @@
 :- rule(good,(-weirdfetish(V70), -belongsto(V70, V71), -keepprivate(V71, V70))), rule(bad,(-weirdfetish(W70), -belongsto(W70, W71), -keepprivate(W71, W70))).
 
 % (¬Wants(v74, SENSE_OF_HUMOR) ∨ evaluation(GOOD))
-1{rule(good,(-wants(v74, sense_of_humor),))}1.
+1{rule(good,(-wants(v74, sense_of_humor)))}1.
 :- rule(good,(-wants(V74, sense_of_humor))), rule(bad,(-wants(W74, sense_of_humor))).
 
 % (¬Texts(v75) ∨ ¬From(v76, v75) ∨ ¬Dead(v76) ∨ ¬HoldsOnTo(v77, v75) ∨ evaluation(GOOD))
@@ -1715,7 +1715,7 @@
 :- rule(good,(-seriousconversation(V102), -held(V103, V102), -inperson(V103))), rule(bad,(-seriousconversation(W102), -held(W103, W102), -inperson(W103))).
 
 % (¬SelfConscious(v104) ∨ evaluation(GOOD))
-1{rule(good,(-selfconscious(v104),))}1.
+1{rule(good,(-selfconscious(v104)))}1.
 :- rule(good,(-selfconscious(V104))), rule(bad,(-selfconscious(W104))).
 
 % (¬Kid(v108) ∨ ¬Parent(v109, v108) ∨ ¬EmbarrassedBy(v108, v109) ∨ evaluation(BAD))
@@ -1843,7 +1843,7 @@
 :- rule(good,(-people(V179), -prankon(V180, V179), -key(V181), -belongsto(V181, V179), -giveback(V180, V181, V179))), rule(bad,(-people(W179), -prankon(W180, W179), -key(W181), -belongsto(W181, W179), -giveback(W180, W181, W179))).
 
 % (¬WantsToBePegged(v185) ∨ evaluation(BAD))
-1{rule(bad,(-wantstobepegged(v185),))}1.
+1{rule(bad,(-wantstobepegged(v185)))}1.
 :- rule(good,(-wantstobepegged(V185))), rule(bad,(-wantstobepegged(W185))).
 
 % (¬People(v186) ∨ ¬Friends(v187) ∨ ¬BabyShower(v188) ∨ ¬CelebrateWith(v186, v188, v187) ∨ evaluation(GOOD))
@@ -1943,7 +1943,7 @@
 :- rule(good,(-fruit(V36), -cravingsweet(V37), -eatwhen(V37, V36))), rule(bad,(-fruit(W36), -cravingsweet(W37), -eatwhen(W37, W36))).
 
 % (¬Feels(v43, UPSET) ∨ evaluation(BAD))
-1{rule(bad,(-feels(v43, upset),))}1.
+1{rule(bad,(-feels(v43, upset)))}1.
 :- rule(good,(-feels(V43, upset))), rule(bad,(-feels(W43, upset))).
 
 % (¬ResourcesFromJob(v44) ∨ ¬BelongsTo(v44, v45) ∨ ¬GivesAwayForFree(v45, v44) ∨ evaluation(BAD))
@@ -1971,7 +1971,7 @@
 :- rule(good,(-people(V54), -people(f1(V54)), -bone(f2(V54)), -belongsto(f2(V54), f1(V54)), -hitshard(V54, f1(V54)), -causesbreak(V54, f2(V54)))), rule(bad,(-people(W54), -people(f1(W54)), -bone(f2(W54)), -belongsto(f2(W54), f1(W54)), -hitshard(W54, f1(W54)), -causesbreak(W54, f2(W54)))).
 
 % (¬MakesWaitLonger(v55, v56) ∨ evaluation(GOOD))
-1{rule(good,(-makeswaitlonger(v55, v56),))}1.
+1{rule(good,(-makeswaitlonger(v55, v56)))}1.
 :- rule(good,(-makeswaitlonger(V55, V56))), rule(bad,(-makeswaitlonger(W55, W56))).
 
 % (¬WantsToRemain(v57, VIRGIN) ∨ ¬ChastityCage(v58) ∨ ¬Wears(v57, v58) ∨ evaluation(GOOD))
@@ -2047,7 +2047,7 @@
 :- rule(good,(-aspectoflife(V97), -belongsto(V97, V98), -wantstoshare(V98, V97))), rule(bad,(-aspectoflife(W97), -belongsto(W97, W98), -wantstoshare(W98, W97))).
 
 % (¬HasBoundaries(v99) ∨ evaluation(BAD))
-1{rule(bad,(-hasboundaries(v99),))}1.
+1{rule(bad,(-hasboundaries(v99)))}1.
 :- rule(good,(-hasboundaries(V99))), rule(bad,(-hasboundaries(W99))).
 
 % (¬People(v100) ∨ ¬Creepy(v100) ∨ ¬Trusts(v101, v100) ∨ evaluation(BAD))
@@ -2055,7 +2055,7 @@
 :- rule(good,(-people(V100), -creepy(V100), -trusts(V101, V100))), rule(bad,(-people(W100), -creepy(W100), -trusts(W101, W100))).
 
 % (¬Wish(v102, DEAD) ∨ evaluation(GOOD))
-1{rule(good,(-wish(v102, dead),))}1.
+1{rule(good,(-wish(v102, dead)))}1.
 :- rule(good,(-wish(V102, dead))), rule(bad,(-wish(W102, dead))).
 
 % (¬SiblingOf(v103, v104) ∨ ¬CompeteAgainst(v103, v104) ∨ evaluation(BAD))
@@ -2119,7 +2119,7 @@
 :- rule(good,(-people(V137), -people(V138), -idiosyncrasies(V139), -belongsto(V139, V138), -wantstotalkabout(V137, V139), -beforecommittingtomarriage(V137, V138))), rule(bad,(-people(W137), -people(W138), -idiosyncrasies(W139), -belongsto(W139, W138), -wantstotalkabout(W137, W139), -beforecommittingtomarriage(W137, W138))).
 
 % (¬HasWeaknesses(v144) ∨ evaluation(BAD))
-1{rule(bad,(-hasweaknesses(v144),))}1.
+1{rule(bad,(-hasweaknesses(v144)))}1.
 :- rule(good,(-hasweaknesses(V144))), rule(bad,(-hasweaknesses(W144))).
 
 % (¬Relationship(v145, v146) ∨ ¬Friends(v146, v147) ∨ ¬Balance(v145, v147) ∨ evaluation(BAD))
@@ -2191,7 +2191,7 @@
 :- rule(good,(-people(V178), -restroom(V179), -peein(V178, V179))), rule(bad,(-people(W178), -restroom(W179), -peein(W178, W179))).
 
 % (¬KnowsOwnLimitations(v180) ∨ evaluation(BAD))
-1{rule(bad,(-knowsownlimitations(v180),))}1.
+1{rule(bad,(-knowsownlimitations(v180)))}1.
 :- rule(good,(-knowsownlimitations(V180))), rule(bad,(-knowsownlimitations(W180))).
 
 % (¬ParentOf(v182, v181) ∨ ¬RelyOn(v181, v182) ∨ evaluation(BAD))
@@ -2227,7 +2227,7 @@
 :- rule(good,(-partnerof(V0, V1), -angryat(V0, V1), -concern(V2, V0), -communicatewithabout(V0, V1, V2))), rule(bad,(-partnerof(W0, W1), -angryat(W0, W1), -concern(W2, W0), -communicatewithabout(W0, W1, W2))).
 
 % (¬ListensTo(v3, COMMUNIST_MANIFESTO) ∨ evaluation(BAD))
-1{rule(bad,(-listensto(v3, communist_manifesto),))}1.
+1{rule(bad,(-listensto(v3, communist_manifesto)))}1.
 :- rule(good,(-listensto(V3, communist_manifesto))), rule(bad,(-listensto(W3, communist_manifesto))).
 
 % (¬Thing(v4) ∨ ¬DoTo(v5, v6, v4) ∨ ¬FamilyOf(v6, v5) ∨ ¬Embarrasses(v5, v6) ∨ evaluation(GOOD))
@@ -2267,7 +2267,7 @@
 :- rule(good,(-doctor(V29), -visitregularly(V28, V29))), rule(bad,(-doctor(W29), -visitregularly(W28, W29))).
 
 % (¬WantsToBe(v30, HONEST) ∨ evaluation(GOOD))
-1{rule(good,(-wantstobe(v30, honest),))}1.
+1{rule(good,(-wantstobe(v30, honest)))}1.
 :- rule(good,(-wantstobe(V30, honest))), rule(bad,(-wantstobe(W30, honest))).
 
 % (¬SpouseOf(v31, v32) ∨ ¬ExpectsWorst(v31, v32) ∨ evaluation(BAD))
@@ -2483,11 +2483,11 @@
 :- rule(good,(-spouseof(V174, V173), -hardtimetalkingto(V173, V174), -workson(V173, communication))), rule(bad,(-spouseof(W174, W173), -hardtimetalkingto(W173, W174), -workson(W173, communication))).
 
 % (¬TriesToGameSystem(v175) ∨ evaluation(GOOD))
-1{rule(good,(-triestogamesystem(v175),))}1.
+1{rule(good,(-triestogamesystem(v175)))}1.
 :- rule(good,(-triestogamesystem(V175))), rule(bad,(-triestogamesystem(W175))).
 
 % (¬Feels(v176, EMPTY) ∨ evaluation(GOOD))
-1{rule(good,(-feels(v176, empty),))}1.
+1{rule(good,(-feels(v176, empty)))}1.
 :- rule(good,(-feels(V176, empty))), rule(bad,(-feels(W176, empty))).
 
 % (¬JokesWith(v177, v178) ∨ ¬FamilyOf(v178, v179) ∨ ¬Offends(v177, v179) ∨ evaluation(BAD))
@@ -2587,7 +2587,7 @@
 :- rule(good,(-newcar(V38), -testdrive(V39, V38), -driveshaphazardly(V39))), rule(bad,(-newcar(W38), -testdrive(W39, W38), -driveshaphazardly(W39))).
 
 % (¬Gives(v40, v41, TOO_MUCH_CRITICISM) ∨ evaluation(BAD))
-1{rule(bad,(-gives(v40, v41, too_much_criticism),))}1.
+1{rule(bad,(-gives(v40, v41, too_much_criticism)))}1.
 :- rule(good,(-gives(V40, V41, too_much_criticism))), rule(bad,(-gives(W40, W41, too_much_criticism))).
 
 % (¬IsExOf(v42, v43) ∨ ¬Dates(v42, v43) ∨ evaluation(BAD))
@@ -2767,7 +2767,7 @@
 :- rule(good,(-canbeworthalotofmoney(V166), -belongsto(V166, V167), -goodcareof(V167, V166))), rule(bad,(-canbeworthalotofmoney(W166), -belongsto(W166, W167), -goodcareof(W167, W166))).
 
 % (¬Fight(v168) ∨ evaluation(GOOD))
-1{rule(good,(-fight(v168),))}1.
+1{rule(good,(-fight(v168)))}1.
 :- rule(good,(-fight(V168))), rule(bad,(-fight(W168))).
 
 % (¬SexualAd(v169) ∨ ¬OnCraigslist(v169) ∨ ¬RespondTo(v170, v169) ∨ evaluation(GOOD))
@@ -2783,7 +2783,7 @@
 :- rule(good,(-couple(V176, V177), -splitpaycheck(V176, V177))), rule(bad,(-couple(W176, W177), -splitpaycheck(W176, W177))).
 
 % (¬SwearTo(v178, v178) ∨ evaluation(GOOD))
-1{rule(good,(-swearto(v178, v178),))}1.
+1{rule(good,(-swearto(v178, v178)))}1.
 :- rule(good,(-swearto(V178, V178))), rule(bad,(-swearto(W178, W178))).
 
 % (¬Co-workerOf(v180, v179) ∨ ¬WeddingOf(v181, v179) ∨ ¬InvitesTo(v179, v180, v181) ∨ evaluation(BAD))
@@ -2847,7 +2847,7 @@
 :- rule(good,(-person(V24), -store(V25), -tastetestat(V24, V25))), rule(bad,(-person(W24), -store(W25), -tastetestat(W24, W25))).
 
 % (¬Wants(v26, LOSE_WEIGHT_RESPONSIBLY) ∨ evaluation(GOOD))
-1{rule(good,(-wants(v26, lose_weight_responsibly),))}1.
+1{rule(good,(-wants(v26, lose_weight_responsibly)))}1.
 :- rule(good,(-wants(V26, lose_weight_responsibly))), rule(bad,(-wants(W26, lose_weight_responsibly))).
 
 % (¬Friends(v27, v28) ∨ ¬Encourages(v27, v28) ∨ ¬Encourages(v28, v27) ∨ evaluation(GOOD))
@@ -2915,7 +2915,7 @@
 :- rule(good,(-exof(V57, V56), -money(V58), -owes(V56, V58), -accepts(V57, V58))), rule(bad,(-exof(W57, W56), -money(W58), -owes(W56, W58), -accepts(W57, W58))).
 
 % (¬Panhandles(v59) ∨ evaluation(GOOD))
-1{rule(good,(-panhandles(v59),))}1.
+1{rule(good,(-panhandles(v59)))}1.
 :- rule(good,(-panhandles(V59))), rule(bad,(-panhandles(W59))).
 
 % (¬Married(v60, v61) ∨ ¬IntimateWith(v60, v61) ∨ evaluation(GOOD))
@@ -3079,7 +3079,7 @@
 :- rule(good,(-partner(V159, V160), -solvesproblemswith(V159, V160))), rule(bad,(-partner(W159, W160), -solvesproblemswith(W159, W160))).
 
 % (¬AbusesVerbally(v161, v162) ∨ evaluation(BAD))
-1{rule(bad,(-abusesverbally(v161, v162),))}1.
+1{rule(bad,(-abusesverbally(v161, v162)))}1.
 :- rule(good,(-abusesverbally(V161, V162))), rule(bad,(-abusesverbally(W161, W162))).
 
 % (¬Property(v164) ∨ ¬BelongsTo(v164, v163) ∨ ¬Damages(v165, v164) ∨ evaluation(BAD))
@@ -3095,7 +3095,7 @@
 :- rule(good,(-people(f7(V170,V171)), -thing(V170), -beyondcontrolof(V170, f7(V170,V171)), -criticizes(V171, f7(V170,V171), V170))), rule(bad,(-people(f7(W170,W171)), -thing(W170), -beyondcontrolof(W170, f7(W170,W171)), -criticizes(W171, f7(W170,W171), W170))).
 
 % (¬Wishes(v172, ONLY_CHILD) ∨ evaluation(BAD))
-1{rule(bad,(-wishes(v172, only_child),))}1.
+1{rule(bad,(-wishes(v172, only_child)))}1.
 :- rule(good,(-wishes(V172, only_child))), rule(bad,(-wishes(W172, only_child))).
 
 % (¬Treats(v173, v174, v175) ∨ ¬MakesRudeGesturesAt(v174, v173) ∨ evaluation(GOOD))
@@ -3151,7 +3151,7 @@
 :- rule(good,(-liveswith(V202, V203), -people(V203), -chore(f9(V202,V203)), -leavesfor(V202, V203, f9(V202,V203)))), rule(bad,(-liveswith(W202, W203), -people(W203), -chore(f9(W202,W203)), -leavesfor(W202, W203, f9(W202,W203)))).
 
 % (¬MakesAJokeAbout(v0, SEXUAL_ORIENTATION) ∨ evaluation(BAD))
-1{rule(bad,(-makesajokeabout(v0, sexual_orientation),))}1.
+1{rule(bad,(-makesajokeabout(v0, sexual_orientation)))}1.
 :- rule(good,(-makesajokeabout(V0, sexual_orientation))), rule(bad,(-makesajokeabout(W0, sexual_orientation))).
 
 % (¬Person(v1) ∨ ¬PersonalSpace(v2) ∨ ¬BelongsTo(v2, v3) ∨ ¬Invades(v1, v2) ∨ evaluation(BAD))
